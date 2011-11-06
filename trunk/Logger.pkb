@@ -15,6 +15,12 @@
 --
 create or replace 
 type body Logger as
+
+  member function IsEnabledFor(logLevel binary_integer) return boolean as
+  begin
+    return true;
+  end;
+  
   member function IsDebugEnabled return boolean as
   begin
     return false;

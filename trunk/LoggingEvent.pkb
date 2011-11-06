@@ -14,4 +14,18 @@
 -- limitations under the License.
 --
 create or replace 
-type LoggerArray as table of Logger;
+type body LoggingEvent as
+
+  constructor function LoggingEvent(logger Logger, logLevel LogLevel, message varchar2, exceptionString varchar2) return self as result as
+  begin
+    self.LoggerName := logger.Name;
+    self.LLevel := logLevel.Name;
+    self.DateTime := SYSTIMESTAMP;
+    self.UserName := user;
+    self.Message := message;
+    self.ExceptionString := exceptionString;
+    return;
+  end;
+  
+end;
+/

@@ -16,21 +16,18 @@
 create or replace 
 type LoggingEvent as object
 (
-	Error varchar2(2000);
-	LogLevel 
+  ExceptionString varchar2(2000), -- The string representation of the exception
+  LLevel number, -- Level of logging event.
+  LoggerName varchar2(255), -- The logger name.
+  Message varchar2(4000), -- The application supplied message.
+  DateTime timestamp(3), -- The time the event was logged
+  UserName varchar2(255), -- String representation of the user
 
+  constructor function LoggingEvent(logger Logger, logLevel LogLevel, message varchar2, exceptionString varchar2) return self as result
+  --Domain	 String representation of the AppDomain.
+  --Identity	 String representation of the identity.
+  --LocationInfo	 Location information for the caller.
+  --Properties	 Additional event specific properties
+  --ThreadName	 The name of thread
 );
 /
-
-
-Domain	 String representation of the AppDomain.
-ExceptionString	 The string representation of the exception
-Identity	 String representation of the identity.
-LogLevel	 Level of logging event.
---LocationInfo	 Location information for the caller.
-LoggerName	 The logger name.
-Message	 The application supplied message.
---Properties	 Additional event specific properties
-ThreadName	 The name of thread
-TimeStamp	 The time the event was logged
-UserName	 String representation of the user

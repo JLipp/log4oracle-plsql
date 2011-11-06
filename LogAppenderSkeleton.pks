@@ -16,8 +16,11 @@
 create or replace 
 type LogAppenderSkeleton as object
 (
-	Error varchar2(2000);
-	LogLevel 
+	Name varchar2(255),
+  Treshold number,
 
-);
+  member procedure DoAppend(loggingEvent LoggingEvent),
+  not final member procedure Append(loggingEvent LoggingEvent)
+)
+not final not instantiable;
 /

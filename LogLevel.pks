@@ -21,22 +21,20 @@ type LogLevel as object
 	/* The name of this level. */
 	Name varchar2(255),
 	/* The value of this level. */
-	Value number(3),
+	Value number,
 
-	/* Initializes a new instance of LogLevel based on the log level value. */
-	constructor function LogLevel(value binary_integer) return self as result,
-	/* Initializes a new instance of LogLevel based on the log level name. */
-	constructor function LogLevel(name varchar2) return self as result,
+	constructor function LogLevel(level binary_integer) return self as result,
 	
 	/* Returns log level value as an indication of relative values to be sortable. */
 	map member function Compare return binary_integer,
 
-	static function AllLevels return binary_integer,
-	static function Debug return binary_integer,
-	static function Info return binary_integer,
-	static function Warn return binary_integer,
-	static function Error return binary_integer,
-	static function Fatal return binary_integer,
-	static function Off return binary_integer
-);
+	static function AllLevels return LogLevel,
+	static function Debug return LogLevel,
+	static function Info return LogLevel,
+	static function Warn return LogLevel,
+	static function Error return LogLevel,
+	static function Fatal return LogLevel,
+	static function Off return LogLevel
+)
+instantiable final;
 /

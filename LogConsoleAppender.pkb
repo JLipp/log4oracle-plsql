@@ -14,18 +14,17 @@
 -- limitations under the License.
 --
 create or replace 
-package LogManager as
-  
-  NotImplementedException exception;
-  type LoggerArray is table of Logger index by varchar2(255);
-  Hierarchy LoggerArray;
-  
-  procedure ConfigureBasic;
-  procedure ConfigureXML(config XMLType);
-  function Exists(name varchar2) return Logger;
-  function GetCurrentLoggers return LoggerArray;
-  function GetLogger(name varchar2) return ILog;
-  procedure Shutdown;
+type body LogConsoleAppender as
 
-end LogManager;
+  constructor function LogConsoleAppender return self as result as
+  begin
+    dbms_output.enable(buffer_size => NULL);
+  end;
+  
+  overriding member procedure Append(loggingEvent LoggingEvent) as
+  begin
+    dbms_output.put_line(LogLevel(loggingEvent.LLevel).Name||' - '||loggingEvent.Message );
+  end;
+  
+end;
 /

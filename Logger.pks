@@ -19,6 +19,8 @@ type Logger as object
   /* name of the logger */
   name varchar2(255),
   
+  member function IsEnabledFor(logLevel LogLevel) return boolean,
+  
   /* Test if a level is enabled for logging */
   member function IsDebugEnabled return boolean,
   member function IsInfoEnabled return boolean,

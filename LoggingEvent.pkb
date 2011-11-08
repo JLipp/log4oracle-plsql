@@ -16,10 +16,10 @@
 create or replace 
 type body LoggingEvent as
 
-  constructor function LoggingEvent(logger Logger, logLevel LogLevel, message varchar2, exceptionString varchar2) return self as result as
+  constructor function LoggingEvent(loggerName varchar2, logLevel LogLevel, message varchar2, exceptionString varchar2) return self as result as
   begin
-    self.LoggerName := logger.Name;
-    self.LLevel := logLevel.Name;
+    self.LoggerName := loggerName;
+    self.LLevel := logLevel;
     self.DateTime := SYSTIMESTAMP;
     self.UserName := user;
     self.Message := message;

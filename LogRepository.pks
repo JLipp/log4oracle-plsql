@@ -14,18 +14,14 @@
 -- limitations under the License.
 --
 create or replace 
-package LogManager as
+package LogRepository as
   
-  NotImplementedException exception;
-  
-  procedure ConfigureBasic;
-  procedure ConfigureXML(config XMLType);
-
-  function Exists(name varchar2) return ILog;
+  function Exists(name varchar2) return Logger;
   --function GetCurrentLoggers return LoggerArray;
-  function GetLogger(name varchar2) return ILog;
+  function GetLogger(name varchar2) return Logger;
+  function GetRepository(name varchar2) return binary_integer;
   procedure ResetConfiguration;
   procedure Shutdown;
 
-end LogManager;
+end LogRepository;
 /

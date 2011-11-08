@@ -13,20 +13,8 @@
 -- See the License for the specific language governing permissions and
 -- limitations under the License.
 --
-create or replace 
-type body LogAppenderSkeleton as
-
-  member procedure DoAppend(loggingEvent LoggingEvent) as
-  begin
-    if (loggingEvent.LLevel >= Treshold) then
-      Append(loggingEvent);
-    end if;
-  end;
-  
-  not final member procedure Append(loggingEvent LoggingEvent) as
-  begin
-    null;
-  end;
-  
-end;
+create or replace
+type LogImpl under ILog
+()
+instantiable final;
 /

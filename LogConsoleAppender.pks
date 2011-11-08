@@ -14,9 +14,9 @@
 -- limitations under the License.
 --
 create or replace 
-type LogConsoleAppender under LogAppenderSkeleton
+type LogConsoleAppender under LogAppender
 (
-  constructor function LogConsoleAppender return self as result,
+  constructor function LogConsoleAppender(name varchar2) return self as result,
   overriding member procedure Append(loggingEvent LoggingEvent)
 )
 final instantiable;

@@ -14,46 +14,19 @@
 -- limitations under the License.
 --
 create or replace 
-package body LogManager as
-  
-  procedure ConfigureBasic is
-  begin 
-    null;
-  end;
-  
-  procedure ConfigureXML(config XMLType) is
-  begin 
-    raise NotImplementedException; 
-  end;
+type body LogAppender as
 
-  function GetLogger(name varchar2) return ILog is
-    m_log LogImpl;
+  member procedure DoAppend(loggingEvent LoggingEvent) as
   begin
-    m_log := LogImpl(LogRepository.GetLogger(name));
-    return m_log;
-  end;
-
-  /*
-  function GetCurrentLoggers return LoggerArray is
-  begin
-    raise NotImplementedException; 
-  end;
-  */  
-  
-  function Exists(name varchar2) return ILog is
-  begin
-  	null;
+    if (loggingEvent.LLevel >= Treshold) then
+      Append(loggingEvent);
+    end if;
   end;
   
-  procedure ResetConfiguration is
+  not final member procedure Append(loggingEvent LoggingEvent) as
   begin
     null;
   end;
   
-  procedure Shutdown is
-  begin
-    null;
-  end;
-
-end LogManager;
+end;
 /

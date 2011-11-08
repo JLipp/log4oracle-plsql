@@ -14,18 +14,13 @@
 -- limitations under the License.
 --
 create or replace 
-package LogManager as
-  
-  NotImplementedException exception;
-  
-  procedure ConfigureBasic;
-  procedure ConfigureXML(config XMLType);
+type LogAppender as object
+(
+	Name varchar2(255),
+  Treshold LogLevel,
 
-  function Exists(name varchar2) return ILog;
-  --function GetCurrentLoggers return LoggerArray;
-  function GetLogger(name varchar2) return ILog;
-  procedure ResetConfiguration;
-  procedure Shutdown;
-
-end LogManager;
+  member procedure DoAppend(loggingEvent LoggingEvent),
+  not final member procedure Append(loggingEvent LoggingEvent)
+)
+not final not instantiable;
 /

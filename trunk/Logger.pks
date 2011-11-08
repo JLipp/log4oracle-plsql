@@ -16,31 +16,34 @@
 create or replace 
 type Logger as object
 ( 
-  /* name of the logger */
-  name varchar2(255),
+  /* Private fields */
+  m_additive integer,
+  m_level LogLevel,
+  m_name varchar2(255),
+  m_parent anydata,
+  m_appenders LogAppenderArray,
   
-  member function IsEnabledFor(logLevel LogLevel) return boolean,
+  /* This is the most generic printing method that is intended to be used by wrappers. */
+  member procedure Log(logEvent LoggingEvent),
   
-  /* Test if a level is enabled for logging */
-  member function IsDebugEnabled return boolean,
-  member function IsInfoEnabled return boolean,
-  member function IsWarnEnabled return boolean,
-  member function IsErrorEnabled return boolean,
-  member function IsFatalEnabled return boolean,
+  /* member methods to manager the logger */
+  member procedure AddAppender(appender LogAppender),
+  member function GetAllAppenders return LogAppender,
+  member function GetAppender return LogAppender,
+  member procedure RemoveAllAppenders,
+  member procedure RemoveAppender(name varchar2),
+  member procedure RemoveAppender(appender LogAppender),
   
-  /* Log a message */
-  member procedure Debug(message varchar2),
-  member procedure Info(message varchar2),
-  member procedure Error(message varchar2),
-  member procedure Warn(message varchar2),
-  member procedure Fatal(message varchar2),
-
-  /* Log a message and exception */
-  member procedure Debug(message varchar2, error varchar2),
-  member procedure Info(message varchar2, error varchar2),
-  member procedure Warn(message varchar2, error varchar2),
-  member procedure Error(message varchar2, error varchar2),
-  member procedure Fatal(message varchar2, error varchar2)
-
-  );
+  member function GetAdditivity return boolean,
+  member procedure SetAdditivity(value boolean),
+  member function GetEffectiveLevel return LogLevel,
+  member function GetLevel return LogLevel,
+  member procedure SetLevel(logLevel LogLevel),
+  member function GetLoggerRepository return varchar2,
+  member function GetName return varchar2,
+  member function GetParent return Logger,
+  member function IsEnabledFor(logLevel LogLevel) return boolean
+  
+)
+not final not instantiable;
 /

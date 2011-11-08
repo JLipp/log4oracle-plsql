@@ -13,14 +13,6 @@
 -- See the License for the specific language governing permissions and
 -- limitations under the License.
 --
-create or replace 
-type LogAppenderSkeleton as object
-(
-	Name varchar2(255),
-  Treshold number,
-
-  member procedure DoAppend(loggingEvent LoggingEvent),
-  not final member procedure Append(loggingEvent LoggingEvent)
-)
-not final not instantiable;
+create or replace
+type LogAppenderArray is table of LogAppender;
 /

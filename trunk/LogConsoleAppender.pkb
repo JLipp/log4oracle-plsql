@@ -16,14 +16,16 @@
 create or replace 
 type body LogConsoleAppender as
 
-  constructor function LogConsoleAppender return self as result as
+  constructor function LogConsoleAppender(name varchar2) return self as result as
   begin
-    dbms_output.enable(buffer_size => NULL);
+    self.Name := name;
+    self.Treshold := LogLevel.Debug;
+    return;
   end;
   
   overriding member procedure Append(loggingEvent LoggingEvent) as
   begin
-    dbms_output.put_line(LogLevel(loggingEvent.LLevel).Name||' - '||loggingEvent.Message );
+    dbms_output.put_line('['||loggingEvent.LoggerName||'] '||loggingEvent.LLevel.Name||' - '||loggingEvent.Message||' '||loggingEvent.ExceptionString);
   end;
   
 end;

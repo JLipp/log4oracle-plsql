@@ -14,25 +14,15 @@
 -- limitations under the License.
 --
 create or replace 
-package body LogManager as
-  
-  procedure ConfigureBasic is
-  begin 
-    null;
-  end;
-  
-  procedure ConfigureXML(config XMLType) is
-  begin 
-    raise NotImplementedException; 
-  end;
+package body LogRepository as
 
-  function GetLogger(name varchar2) return ILog is
-    m_log LogImpl;
+  parent_logger LoggerImpl;
+  
+  function Exists(name varchar2) return Logger is
   begin
-    m_log := LogImpl(LogRepository.GetLogger(name));
-    return m_log;
+  	null;
   end;
-
+  
   /*
   function GetCurrentLoggers return LoggerArray is
   begin
@@ -40,11 +30,19 @@ package body LogManager as
   end;
   */  
   
-  function Exists(name varchar2) return ILog is
+  function GetLogger(name varchar2) return Logger is
   begin
-  	null;
+    if parent_logger is null then
+      parent_logger := LoggerImpl(0, LogLevel.Debug, 'root', null, LogAppenderArray());
+    end if;
+	  return LoggerImpl(1, null, name, anydata.ConvertObject(parent_logger), LogAppenderArray());
   end;
   
+  function GetRepository(name varchar2) return binary_integer is
+  begin
+    return 1;
+  end;
+
   procedure ResetConfiguration is
   begin
     null;
@@ -55,5 +53,5 @@ package body LogManager as
     null;
   end;
 
-end LogManager;
+end LogRepository;
 /

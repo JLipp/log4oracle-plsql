@@ -16,29 +16,30 @@
 create or replace 
 type ILog as object
 ( 
-  -- name of the logger
-  name varchar2(255),
+  /* Private fields */
+  m_logger Logger,
   
-  -- Test if a level is enabled for logging
+  /* Test if a level is enabled for logging */
   member function IsDebugEnabled return boolean,
   member function IsInfoEnabled return boolean,
   member function IsWarnEnabled return boolean,
   member function IsErrorEnabled return boolean,
   member function IsFatalEnabled return boolean,
   
-  -- Log a message
+  /* Log a message */
   member procedure Debug(message varchar2),
   member procedure Info(message varchar2),
   member procedure Error(message varchar2),
   member procedure Warn(message varchar2),
   member procedure Fatal(message varchar2),
 
-  -- Log a message and exception
+  /* Log a message and exception */
   member procedure Debug(message varchar2, error varchar2),
   member procedure Info(message varchar2, error varchar2),
   member procedure Warn(message varchar2, error varchar2),
   member procedure Error(message varchar2, error varchar2),
   member procedure Fatal(message varchar2, error varchar2)
-
-  );
+  
+)
+not final not instantiable;
 /

@@ -15,80 +15,81 @@
 --
 create or replace 
 type body ILog as
-  
+
   member function IsDebugEnabled return boolean as
   begin
-    return LogManager.Hierarchy(self.name).IsEnabledFor(LogLevel.Debug);
+    return m_logger.IsEnabledFor(LogLevel.Debug);
   end;
-  
-  member function IsInfoEnabled return boolean as
-  begin
-    return false;
-  end;
-  
-  member function IsWarnEnabled return boolean as
-  begin
-    return false;  
-  end;  
   
   member function IsErrorEnabled return boolean as
   begin
-    return false;
+    return m_logger.IsEnabledFor(LogLevel.Error);
   end;
   
   member function IsFatalEnabled return boolean as
   begin
-    return false;
+    return m_logger.IsEnabledFor(LogLevel.Fatal);
+  end;
+  
+  member function IsInfoEnabled return boolean as
+  begin
+    return m_logger.IsEnabledFor(LogLevel.Info);
+  end;
+  
+  member function IsWarnEnabled return boolean as
+  begin
+    return m_logger.IsEnabledFor(LogLevel.Warn);
   end;
   
   member procedure Debug(message varchar2) as
   begin
-    dbms_output.put_line(message);
+    m_logger.Log(LoggingEvent(m_logger.m_name, LogLevel.Debug, message, null));
   end;
   
   member procedure Debug(message varchar2, error varchar2) as
   begin
-    null;
+    m_logger.Log(LoggingEvent(m_logger.m_name, LogLevel.Debug, message, error));
   end;
   
   member procedure Error(message varchar2) as
   begin
-    null;
+    m_logger.Log(LoggingEvent(m_logger.m_name, LogLevel.Error, message, null));
   end;
   
   member procedure Error(message varchar2, error varchar2) as
   begin
-    null;
+    m_logger.Log(LoggingEvent(m_logger.m_name, LogLevel.Error, message, error));
   end;
   
   member procedure Fatal(message varchar2) as
   begin
-    null;
+    m_logger.Log(LoggingEvent(m_logger.m_name, LogLevel.Fatal, message, null));
   end;
   
   member procedure Fatal(message varchar2, error varchar2) as
   begin
-    null;
+    m_logger.Log(LoggingEvent(m_logger.m_name, LogLevel.Fatal, message, error));
   end;
   
   member procedure Info(message varchar2) as
   begin
-    null;
+    m_logger.Log(LoggingEvent(m_logger.m_name, LogLevel.Info, message, null));
   end;
   
   member procedure Info(message varchar2, error varchar2) as
   begin
-    null;
+    m_logger.Log(LoggingEvent(m_logger.m_name, LogLevel.Info, message, error));
   end;
   
   member procedure Warn(message varchar2) as
   begin
-    null;
+    m_logger.Log(LoggingEvent(m_logger.m_name, LogLevel.Warn, message, null));
   end;
   
   member procedure Warn(message varchar2, error varchar2) as
   begin
-    null;
+    m_logger.Log(LoggingEvent(m_logger.m_name, LogLevel.Warn, message, error));
   end;
+  
 end;
 /

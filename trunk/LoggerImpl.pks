@@ -13,19 +13,8 @@
 -- See the License for the specific language governing permissions and
 -- limitations under the License.
 --
-create or replace 
-package LogManager as
-  
-  NotImplementedException exception;
-  
-  procedure ConfigureBasic;
-  procedure ConfigureXML(config XMLType);
-
-  function Exists(name varchar2) return ILog;
-  --function GetCurrentLoggers return LoggerArray;
-  function GetLogger(name varchar2) return ILog;
-  procedure ResetConfiguration;
-  procedure Shutdown;
-
-end LogManager;
+create or replace
+type LoggerImpl under Logger
+()
+instantiable final;
 /

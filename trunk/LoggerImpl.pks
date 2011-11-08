@@ -15,6 +15,8 @@
 --
 create or replace
 type LoggerImpl under Logger
-()
+(
+  constructor function LoggerImpl return self as result
+)
 instantiable final;
 /

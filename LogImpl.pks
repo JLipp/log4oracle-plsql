@@ -15,6 +15,8 @@
 --
 create or replace
 type LogImpl under ILog
-()
+(
+  constructor function LogImpl return self as result
+)
 instantiable final;
 /

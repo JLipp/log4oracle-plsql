@@ -15,46 +15,17 @@
 */
 
 create or replace 
-package body LogManager as
+package body LogUtil as
   
-  procedure ConfigureBasic is
-  begin 
-    null;
+  procedure LogLogDebug(message varchar2) as
+  begin
+    dbms_output.put_line('[DEBUG] - '||message);
   end;
   
-  procedure ConfigureXML(config XMLType) is
-  begin 
-    raise LogUtil.NotImplementedException; 
+  procedure LogLogError(message varchar2) as
+  begin
+    dbms_output.put_line('[ERROR] - '||message);  
   end;
 
-  function GetLogger(name varchar2) return ILog is
-    m_log LogImpl;
-  begin
-    m_log := LogImpl(LogRepository.GetLogger(name));
-    return m_log;
-  end;
-
-  /*
-  function GetCurrentLoggers return LoggerArray is
-  begin
-    raise NotImplementedException; 
-  end;
-  */  
-  
-  function Exists(name varchar2) return ILog is
-  begin
-  	null;
-  end;
-  
-  procedure ResetConfiguration is
-  begin
-    null;
-  end;
-  
-  procedure Shutdown is
-  begin
-    null;
-  end;
-
-end LogManager;
+end LogUtil;
 /

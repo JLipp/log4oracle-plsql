@@ -16,10 +16,10 @@
 create or replace
 type body LogLevel as
 
-  constructor function LogLevel(level binary_integer) return self as result as
+  constructor function LogLevel(logLevel binary_integer) return self as result as
   begin
-    self.Value := level;
-    self.Name := case level
+    self.Value := logLevel;
+    self.Name := case logLevel
                    when 0 then 'ALL'
                    when 30000 then 'DEBUG'
                    when 40000 then 'INFO'

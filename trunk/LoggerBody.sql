@@ -1,18 +1,19 @@
---
--- Copyright 2011 Jürgen Lipp
--- 
--- Licensed under the Apache License, Version 2.0 (the "License");
--- you may not use this file except in compliance with the License.
--- You may obtain a copy of the License at
--- 
---     http://www.apache.org/licenses/LICENSE-2.0
--- 
--- Unless required by applicable law or agreed to in writing, software
--- distributed under the License is distributed on an "AS IS" BASIS,
--- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
--- See the License for the specific language governing permissions and
--- limitations under the License.
---
+/** 
+* Copyright 2011 Juergen Lipp
+*  
+* Licensed under the Apache License, Version 2.0 (the "License");
+* you may not use this file except in compliance with the License.
+* You may obtain a copy of the License at
+* 
+*     http://www.apache.org/licenses/LICENSE-2.0
+* 
+* Unless required by applicable law or agreed to in writing, software
+* distributed under the License is distributed on an "AS IS" BASIS,
+* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+* See the License for the specific language governing permissions and
+* limitations under the License.
+*/
+
 create or replace 
 type body Logger as
 
@@ -24,7 +25,7 @@ type body Logger as
   begin
 
     if logEvent is null then
-      --raise LogUtil.ArgumentNullException;
+      raise LogUtil.ArgumentNullException;
       null;
     end if;
 
@@ -49,15 +50,13 @@ type body Logger as
     end loop;
     
     if writes = 0 then
-      dbms_output.put_line('No appenders could be found for logger ['||m_name||']');
-      dbms_output.put_line('Please initialize the log4oracle-plsql system properly.');
-      /* TODO: LogUtil.LogLog.Debug ... instead of dbms_output */
+      LogUtil.LogLogDebug('No appenders could be found for logger ['||m_name||']');
+      LogUtil.LogLogDebug('Please initialize the log4oracle-plsql system properly.');
     end if;
 
   exception
     when others then
-      --LogUtil.LogLog.Error(sqlerrm(sqlcode));
-      null;
+      LogUtil.LogLogError(sqlerrm(sqlcode));
   end;
 
   member procedure AddAppender(appender LogAppender) as
@@ -121,12 +120,12 @@ type body Logger as
   
   member function GetLevel return LogLevel as
   begin
-    null;
+    return m_level;
   end;
   
   member procedure SetLevel(logLevel LogLevel) as
   begin
-    null;
+    m_level := logLevel;
   end;
   
   member function GetLoggerRepository return varchar2 as
@@ -136,12 +135,15 @@ type body Logger as
   
   member function GetName return varchar2 as
   begin
-    null;
+    return m_name;
   end;
   
   member function GetParent return Logger as
+    x number;
+    c Logger;
   begin
-    null;
+    x := m_parent.GetObject(c);
+    return c;
   end;
   
   member function IsEnabledFor(logLevel LogLevel) return boolean as

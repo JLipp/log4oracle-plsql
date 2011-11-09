@@ -23,7 +23,7 @@ type LogLevel as object
 	/* The value of this level. */
 	Value number,
 
-	constructor function LogLevel(level binary_integer) return self as result,
+	constructor function LogLevel(logLevel binary_integer) return self as result,
 	
 	/* Returns log level value as an indication of relative values to be sortable. */
 	map member function Compare return binary_integer,

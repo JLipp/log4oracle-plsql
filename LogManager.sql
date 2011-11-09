@@ -21,12 +21,11 @@ package LogManager as
   * current LogRepository. When the LogManager class is loaded into memory 
   * the default initalzation procedure is inititated. The default intialization 
   * procedure is described in the short 
-  * <a href="http://logging.apache.org/log4j/1.2/manual.html#defaultInit">log4j manual</a>.
+  * <a href="http://logging.apache.org/log4j/1.2/manual.html#defaultInit">
+  * log4j manual</a>.
   * @headcom
   */  
   
-  NotImplementedException exception;
-    
   /** 
   * Returns the named logger if it exists.
   */

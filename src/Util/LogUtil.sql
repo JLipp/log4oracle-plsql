@@ -23,9 +23,6 @@ package LogUtil as
   
   NotImplementedException exception;
   ArgumentNullException exception;
-  
-  procedure LogLogDebug(message varchar2);
-  procedure LogLogError(message varchar2);
-    
+
 end LogUtil;
 /

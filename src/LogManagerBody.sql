@@ -17,16 +17,6 @@
 create or replace 
 package body LogManager as
   
-  procedure ConfigureBasic is
-  begin 
-    null;
-  end;
-  
-  procedure ConfigureXML(config XMLType) is
-  begin 
-    raise LogUtil.NotImplementedException; 
-  end;
-
   function GetLogger(name varchar2) return ILog is
     m_log LogImpl;
   begin
@@ -34,12 +24,10 @@ package body LogManager as
     return m_log;
   end;
 
-  /*
   function GetCurrentLoggers return LoggerArray is
   begin
-    raise NotImplementedException; 
+    raise LogUtil.NotImplementedException; 
   end;
-  */  
   
   function Exists(name varchar2) return ILog is
   begin

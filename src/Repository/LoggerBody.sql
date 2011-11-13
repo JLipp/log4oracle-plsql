@@ -17,7 +17,6 @@
 create or replace 
 type body Logger as
 
-  /* This is the most generic printing method that is intended to be used by wrappers. */
   member procedure Log(logEvent LoggingEvent) as
     x number;
     c Logger;
@@ -50,26 +49,26 @@ type body Logger as
     end loop;
     
     if writes = 0 then
-      LogUtil.LogLogDebug('No appenders could be found for logger ['||m_name||']');
-      LogUtil.LogLogDebug('Please initialize the log4oracle-plsql system properly.');
+      LogLog.Debug('No appenders could be found for logger ['||m_name||']');
+      LogLog.Debug('Please initialize the log4oracle-plsql system properly.');
     end if;
 
   exception
     when others then
-      LogUtil.LogLogError(sqlerrm(sqlcode));
+      LogLog.Error('Error during Log of messages.', sqlerrm(sqlcode));
   end;
 
-  member procedure AddAppender(appender LogAppender) as
+  member procedure AddAppender(appender AppenderSkeleton) as
   begin
     null;
   end;
   
-  member function GetAllAppenders return LogAppender as
+  member function GetAllAppenders return AppenderSkeleton as
   begin
     null;
   end;
   
-  member function GetAppender return LogAppender as
+  member function GetAppender return AppenderSkeleton as
   begin
     null;
   end;
@@ -84,7 +83,7 @@ type body Logger as
     null;
   end;
   
-  member procedure RemoveAppender(appender LogAppender) as
+  member procedure RemoveAppender(appender AppenderSkeleton) as
   begin
     null;
   end;

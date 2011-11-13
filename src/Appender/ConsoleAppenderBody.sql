@@ -1,6 +1,6 @@
 /** 
 * Copyright 2011 Juergen Lipp
-*  
+*
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
 * You may obtain a copy of the License at
@@ -14,20 +14,20 @@
 * limitations under the License.
 */
 
-create or replace
-type LogImpl under ILog
-(
-  /**
-  * Enabled the ILog not instantiable object instaniable for 
-  * internal use.
-  * @headcom
-  */
-    
-  /** 
-  * Construct a new instance for the specified logger.
-  * @return The logger instance.
-  */
-  constructor function LogImpl return self as result
-)
-instantiable final;
+create or replace 
+type body ConsoleAppender as
+
+	constructor function ConsoleAppender(name varchar2) return self as result as
+	begin
+		self.Name := name;
+		self.Treshold := LogLevel.Debug;
+		return;
+	end;
+	
+	overriding member procedure Append(loggingEvent LoggingEvent) as
+	begin
+		dbms_output.put_line('['||loggingEvent.LoggerName||'] '||loggingEvent.LLevel.Name||' - '||loggingEvent.Message||' '||loggingEvent.ExceptionString);
+	end;
+	
+end;
 /

@@ -1,6 +1,6 @@
 /** 
 * Copyright 2011 Juergen Lipp
-*  
+*
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
 * You may obtain a copy of the License at
@@ -14,20 +14,20 @@
 * limitations under the License.
 */
 
-create or replace
-type LogImpl under ILog
-(
-  /**
-  * Enabled the ILog not instantiable object instaniable for 
-  * internal use.
-  * @headcom
-  */
-    
-  /** 
-  * Construct a new instance for the specified logger.
-  * @return The logger instance.
-  */
-  constructor function LogImpl return self as result
-)
-instantiable final;
+create or replace 
+type body AppenderSkeleton as
+
+	member procedure DoAppend(loggingEvent LoggingEvent) as
+	begin
+		if (loggingEvent.LLevel >= Treshold) then
+			Append(loggingEvent);
+		end if;
+	end;
+	
+	not final member procedure Append(loggingEvent LoggingEvent) as
+	begin
+		null;
+	end;
+	
+end;
 /

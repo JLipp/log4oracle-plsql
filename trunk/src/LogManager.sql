@@ -28,37 +28,47 @@ package LogManager as
   
   /** 
   * Returns the named logger if it exists.
-  */
-  procedure ConfigureBasic;
-
-  /** 
-  * Returns the named logger if it exists.
-  * @param config The fully qualified logger name to look for.
-  */
-  procedure ConfigureXML(config XMLType);
-
-  /** 
-  * Returns the named logger if it exists.
   * @param name The fully qualified logger name to look for.
   * @return The logger found, or null if no logger could be found.
   */
   function Exists(name varchar2) return ILog;
-  --function GetCurrentLoggers return LoggerArray;
+  
+  /** 
+  * Returns all the currently defined loggers in the default repository.
+  * The root logger is not included in the returned array.
+  * @return All the defined loggers.
+  */
+  function GetCurrentLoggers return LoggerArray;
 
   /** 
-  * Returns the named logger if it exists.
-  * @param name The fully qualified logger name to look for.
-  * @return The logger found, or null if no logger could be found.
+  * Retrieves a logger named as the name parameter. If the named logger
+  * already exists, then the existing instance will be returned. Otherwise, a 
+  * new instance is created. By default, loggers do not have a set level but 
+  * inherit it from the hierarchy. This is one of the central features of 
+  * log4oracle-plsql.
+  * @param name The name of the logger to retrieve.
+  * @return The logger with the name specified.
   */
   function GetLogger(name varchar2) return ILog;
 
   /** 
-  * Returns the named logger if it exists.
+  * Resets all values contained in this repository instance to their defaults.
+  * @remarks Resets all values contained in the repository instance to their defaults. 
+  *          This removes all appenders from all loggers, sets the level of all 
+  *          non-root loggers to null, sets their additivity flag to true and sets the 
+  *          level of the root logger to Debug. Moreover, message disabling is set to 
+  *          its default "off" value.
   */
   procedure ResetConfiguration;
 
   /** 
-  * Returns the named logger if it exists.
+  * @remarks Calling this method will safely close and remove all appenders in all the
+  *          loggers including root contained in all the default repositories.
+  *          Some appenders need to be closed before the application exists. Otherwise, 
+  *          pending logging events might be lost.
+  *          The shutdown method is careful to close nested appenders before closing 
+  *          regular appenders. This is allows configurations where a regular appender 
+  *          is attached to a logger and again to a nested appender.
   */
   procedure Shutdown;
 

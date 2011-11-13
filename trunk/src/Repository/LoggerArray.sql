@@ -15,19 +15,5 @@
 */
 
 create or replace
-type LogImpl under ILog
-(
-  /**
-  * Enabled the ILog not instantiable object instaniable for 
-  * internal use.
-  * @headcom
-  */
-    
-  /** 
-  * Construct a new instance for the specified logger.
-  * @return The logger instance.
-  */
-  constructor function LogImpl return self as result
-)
-instantiable final;
+type LoggerArray is table of Logger;
 /

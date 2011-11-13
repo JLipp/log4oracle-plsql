@@ -33,9 +33,9 @@ package body LogRepository as
   function GetLogger(name varchar2) return Logger is
   begin
     if parent_logger is null then
-      parent_logger := LoggerImpl(0, LogLevel.Debug, 'root', null, LogAppenderArray());
+      parent_logger := LoggerImpl(0, LogLevel.Debug, 'root', null, AppenderArray());
     end if;
-	  return LoggerImpl(1, null, name, anydata.ConvertObject(parent_logger), LogAppenderArray());
+	  return LoggerImpl(1, null, name, anydata.ConvertObject(parent_logger), AppenderArray());
   end;
   
   function GetRepository(name varchar2) return binary_integer is

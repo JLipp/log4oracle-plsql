@@ -1,6 +1,6 @@
 /** 
 * Copyright 2011 Juergen Lipp
-*  
+*
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
 * You may obtain a copy of the License at
@@ -16,16 +16,6 @@
 
 create or replace 
 package body LogUtil as
-  
-  procedure LogLogDebug(message varchar2) as
-  begin
-    dbms_output.put_line('[DEBUG] - '||message);
-  end;
-  
-  procedure LogLogError(message varchar2) as
-  begin
-    dbms_output.put_line('[ERROR] - '||message);  
-  end;
 
 end LogUtil;
 /

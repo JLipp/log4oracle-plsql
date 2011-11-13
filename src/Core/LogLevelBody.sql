@@ -18,7 +18,6 @@ type body LogLevel as
 
   constructor function LogLevel(logLevel binary_integer) return self as result as
   begin
-    self.Value := logLevel;
     self.Name := case logLevel
                    when 0 then 'ALL'
                    when 30000 then 'DEBUG'
@@ -28,6 +27,12 @@ type body LogLevel as
                    when 110000 then 'FATAL'
                    when 999999 then 'OFF'
                  end;
+    
+    -- only known log levels are allowed, others are null
+    if not self.Name is null then
+      self.Value := logLevel;
+    end if;
+    
     return;
   end;
   

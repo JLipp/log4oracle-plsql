@@ -17,34 +17,35 @@
 create or replace 
 package LogLog as
 	/** 
-	* Outputs log statements from within the log4net assembly.
+	* Outputs log statements from within log4oracle-plsql.
 	* <br />
-	* Log4net components cannot make log4net logging calls. However, it is
-	* sometimes useful for the user to learn about what log4net is
-	* doing.
+	* Log4oracle-plsql components cannot make log4oracle-plsql logging calls.
+	* However, it is sometimes useful for the user to learn about what 
+	* the log4oracle-plsql is doing.
 	* <br />
-	* All log4net internal debug calls go to the standard output stream
-	* whereas internal error messages are sent to the standard error output 
-	* stream.
+	* All log4oracle-plsql internal warning and error calls are displayed
+	* on the console using DBMS_OUTPUT. Debug messages are only shown if
+	* InternalDebugging is enabled. As well you can get a list of messages
+	* using the return value of the methods.
 	*
 	* @headcom
 	*/
 	
 	/**
-	* Gets or sets a value indicating whether log4oracle-plsql internal logging
-	* is enabled or disabled.
+	* Gets or sets a value indicating whether log4oracle-plsql internal
+	* logging is enabled or disabled.
 	* <br />
 	* When set to true, internal debug level logging will be displayed.
 	*/
 	InternalDebugging boolean;
 	
 	/**
-	* Gets or sets a value indicating whether log4oracle-plsql should generate no output
-	* from internal logging, not even for errors. 
+	* Gets or sets a value indicating whether log4oracle-plsql should
+	* generate no output from internal logging, not even for errors. 
 	* <br />
 	* When set to true will cause internal logging at all levels to be 
-	* suppressed. This means that no warning or error reports will be logged. 
-	* This option overrides the "InternalDebugging" setting and 
+	* suppressed. This means that no warning or error reports will be
+	* logged. This option overrides the "InternalDebugging" setting and 
 	* disables all debug also.
 	*/
 	QuietMode boolean;
@@ -55,111 +56,72 @@ package LogLog as
 	EmitInternalMessages boolean;
 	
 	/**
-	* Collection of messages as return value.
+	* Collection of messages to return.
 	*/
-	type StringCollection is table of varchar2(4000)
+	type StringCollection is table of varchar2(32767)
 	  index by binary_integer;
 	/**
 	* Test if LogLog.Debug is enabled for output.
-	* @return true if LogLog.Debug is enabled for output.
+	* @return True if LogLog.Debug is enabled for output.
 	*/
 	function IsDebugEnabled return boolean;
 	
 	/**
-	* Writes log4oracle-plsql internal debug messages to the standard output stream.
+	* Writes log4oracle-plsql internal debug messages to the console.
 	* @param message The message to log.
+	* @param error An exception text to log.
 	*/
-	procedure Debug(message varchar2);
+	procedure Debug(message varchar2, error varchar2 default null);
 	
 	/**
-	* Writes log4oracle-plsql internal debug messages to the standard output stream.
+	* Writes log4oracle-plsql internal debug messages to the console.
 	* @param message The message to log.
+	* @param error An exception text to log.
 	* @return Collection of output lines.
 	*/
-	function Debug(message varchar2) return StringCollection;
-	
-	/**
-	* Writes log4oracle-plsql internal debug messages to the standard output stream.
-	* @param message The message to log.
-	* @param error An exception to log.
-	*/
-	procedure Debug(message varchar2, error varchar2);
-	
-	/**
-	* Writes log4oracle-plsql internal debug messages to the standard output stream.
-	* @param message The message to log.
-	* @param error An exception to log.
-	* @return Collection of output lines.
-	*/
-	function Debug(message varchar2, error varchar2) return StringCollection;
+	function Debug(message varchar2, error varchar2 default null) return StringCollection;
 	
 	/**
 	* Test if LogLog.Warn is enabled for output.
-	* @return true if LogLog.Warn is enabled for output.
+	* @return True if LogLog.Warn is enabled for output.
 	*/
 	function IsWarnEnabled return boolean;
 	
 	/**
-	* Writes log4oracle-plsql internal warn messages to the standard output stream.
+	* Writes log4oracle-plsql internal warn messages to the console.
 	* @param message The message to log.
+	* @param error An exception text to log.
 	*/
-	procedure Warn(message varchar2);
+	procedure Warn(message varchar2, error varchar2 default null);
 	
 	/**
-	* Writes log4oracle-plsql internal warn messages to the standard output stream.
+	* Writes log4oracle-plsql internal warn messages to the console.
 	* @param message The message to log.
+	* @param error An exception text to log.
 	* @return Collection of output lines.
 	*/
-	function Warn(message varchar2) return StringCollection;
-	
-	/**
-	* Writes log4oracle-plsql internal warn messages to the standard output stream.
-	* @param message The message to log.
-	* @param error An exception to log.
-	*/
-	procedure Warn(message varchar2, error varchar2);
-	
-	/**
-	* Writes log4oracle-plsql internal warn messages to the standard output stream.
-	* @param message The message to log.
-	* @param error An exception to log.
-	* @return Collection of output lines.
-	*/
-	function Warn(message varchar2, error varchar2) return StringCollection;
+	function Warn(message varchar2, error varchar2 default null) return StringCollection;
 	
 	/**
 	* Test if LogLog.Error is enabled for output.
-	* @return true if LogLog.Error is enabled for output.
+	* @return True if LogLog.Error is enabled for output.
 	*/
 	function IsErrorEnabled return boolean;
 	
 	/**
-	* Writes log4oracle-plsql internal error messages to the standard output stream.
+	* Writes log4oracle-plsql internal error messages to the console.
 	* @param message The message to log.
+	* @param perror An exception text to log.
 	*/
-	procedure Error(message varchar2);
+	procedure Error(message varchar2, perror varchar2 default null);
 	
 	/**
-	* Writes log4oracle-plsql internal error messages to the standard output stream.
+	* Writes log4oracle-plsql internal error messages to the console.
 	* @param message The message to log.
+	* @param perror An exception text to log.
 	* @return Collection of output lines.
 	*/
-	function Error(message varchar2) return StringCollection;
-	
-	/**
-	* Writes log4oracle-plsql internal error messages to the standard output stream.
-	* @param message The message to log.
-	* @param error An exception to log.
-	*/
-	procedure Error(message varchar2, perror varchar2);
-	
-	/**
-	* Writes log4oracle-plsql internal error messages to the standard output stream.
-	* @param message The message to log.
-	* @param error An exception to log.
-	* @return Collection of output lines.
-	*/
-	function Error(message varchar2, perror varchar2) return StringCollection;
+	function Error(message varchar2, perror varchar2 default null) return StringCollection;
 	
 end LogLog;
 /

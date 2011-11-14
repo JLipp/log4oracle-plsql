@@ -26,44 +26,41 @@ package body LogLog as
 		dbms_output.put_line(message);
 	end;
 	
+	function ForceLog(prefix varchar2, message varchar2, error varchar2) return Stringcollection as
+		v_messages StringCollection;
+		v_counter number := 0;
+	begin
+		if EmitInternalMessages then
+			EmitOutLine(prefix || message);
+			if error is not null then
+				EmitOutLine(error);
+			end if;
+		end if;
+		v_counter := v_counter + 1;
+		v_messages(v_counter) := prefix || message;
+		if error is not null then
+			v_counter := v_counter + 1;
+			v_messages(v_counter) := error;
+		end if;
+		return v_messages;
+	end;
+
 	function IsDebugEnabled return boolean as
 	begin
 		return (InternalDebugging and not QuietMode);
 	end;
 	
-	procedure Debug(message varchar2) as
-	begin
-		Debug(message, null);
-	end;
-
-	function Debug(message varchar2) return StringCollection as
-	begin
-		return Debug(message, null);
-	end;
-
-	procedure Debug(message varchar2, error varchar2) as
+	procedure Debug(message varchar2, error varchar2 default null) as
 		v_messages StringCollection;
 	begin
 		v_messages := Debug(message, error);
 	end;
 
-	function Debug(message varchar2, error varchar2) return StringCollection as
+	function Debug(message varchar2, error varchar2 default null) return StringCollection as
 		v_messages StringCollection;
-		v_counter number := 0;
 	begin
 		if IsDebugEnabled then
-			if EmitInternalMessages then
-				EmitOutLine(PREFIX || message);
-				if error is not null then
-				  EmitOutLine(error);
-				end if;
-			end if;
-			v_counter := v_counter + 1;
-			v_messages(v_counter) := PREFIX || message;
-			if error is not null then
-			  v_counter := v_counter + 1;
-				v_messages(v_counter) := error;
-			end if;
+			v_messages := ForceLog(PREFIX, message, error);
 		end if;
 		return v_messages;
 	end;
@@ -73,39 +70,17 @@ package body LogLog as
 		return (not QuietMode);
 	end;
 	
-	procedure Warn(message varchar2) as
-	begin
-		Warn(message, null);
-	end;
-
-	function Warn(message varchar2) return StringCollection as
-	begin
-		return Warn(message, null);
-	end;
-
-	procedure Warn(message varchar2, error varchar2) as
+	procedure Warn(message varchar2, error varchar2 default null) as
 		v_messages StringCollection;
 	begin
 		v_messages := Warn(message, error);
 	end;
 
-	function Warn(message varchar2, error varchar2) return StringCollection as
+	function Warn(message varchar2, error varchar2 default null) return StringCollection as
 		v_messages StringCollection;
-		v_counter number := 0;
 	begin
 		if IsWarnEnabled then
-			if EmitInternalMessages then
-				EmitOutLine(WARN_PREFIX || message);
-				if error is not null then
-				  EmitOutLine(error);
-				end if;
-			end if;
-			v_counter := v_counter + 1;
-			v_messages(v_counter) := WARN_PREFIX || message;
-			if error is not null then
-			  v_counter := v_counter + 1;
-				v_messages(v_counter) := error;
-			end if;
+			v_messages := ForceLog(WARN_PREFIX, message, error);
 		end if;
 		return v_messages;
 	end;
@@ -115,44 +90,27 @@ package body LogLog as
 		return (not QuietMode);
 	end;
 	
-	procedure Error(message varchar2) as
-	begin
-		Error(message, null);
-	end;
-
-	function Error(message varchar2)  return StringCollection as
-	begin
-		return Error(message, null);
-	end;
-
-	procedure Error(message varchar2, perror varchar2) as
+	procedure Error(message varchar2, perror varchar2 default null) as
 		v_messages StringCollection;
 	begin
 		v_messages := Error(message, perror);
 	end;
 
-	function Error(message varchar2, perror varchar2)  return StringCollection as
+	function Error(message varchar2, perror varchar2 default null)  return StringCollection as
 		v_messages StringCollection;
-		v_counter number := 0;
 	begin
 		if IsErrorEnabled then
-			if EmitInternalMessages then
-				EmitOutLine(ERR_PREFIX || message);
-				if perror is not null then
-				  EmitOutLine(perror);
-				end if;
-			end if;
-			v_counter := v_counter + 1;
-			v_messages(v_counter) := ERR_PREFIX || message;
-			if perror is not null then
-			  v_counter := v_counter + 1;
-				v_messages(v_counter) := perror;
-			end if;
+			v_messages := ForceLog(ERR_PREFIX, message, perror);
 		end if;
 		return v_messages;
 	end;
-
+	
 begin
+	/** 
+	* Initialize the LogLog internal logging system with default behaviour.
+	* Warning and Errors are displayed at the console, debug messages
+	* are ignored.
+	*/
 	InternalDebugging := false;
 	QuietMode := false;
 	EmitInternalMessages := true;

@@ -78,20 +78,46 @@ package body ut_LogLog is
 		utAssert.eq('CountDebugLines',
 		            v_messages.COUNT,
 		            1);
-		utAssert.eq('CheckLineContent',
+		utAssert.eq('CheckLineContent Debug',
 		            v_messages(1),
 		            'log4oracle-plsql: this is the message line');
 		
 		v_messages := LogLog.Debug('this is an error', 'with an exception');
-		utAssert.eq('CountDebugLines',
+		utAssert.eq('CountDebugLines2',
 		            v_messages.COUNT,
 		            2);
-		utAssert.eq('CheckLineContent',
+		utAssert.eq('CheckLineContent Debug2',
 		            v_messages(1),
 		            'log4oracle-plsql: this is an error');
-		utAssert.eq('CheckLineContent',
+		utAssert.eq('CheckLineContent DebugError',
 		            v_messages(2),
 		            'with an exception');
+	end;
+	
+	procedure ut_DebugModes is
+		v_messages LogLog.StringCollection;
+	begin
+		ut_setup;
+		LogLog.QuietMode := false;
+		LogLog.InternalDebugging := false;
+		v_messages := LogLog.Debug('this is the message line');
+		utAssert.eq('CountDebugLines everything false',
+		            v_messages.COUNT,
+		            0);
+		
+		LogLog.QuietMode := true;
+		LogLog.InternalDebugging := false;
+		v_messages := LogLog.Debug('this is the message line');
+		utAssert.eq('CountDebugLines QuietMode true',
+		            v_messages.COUNT,
+		            0);
+
+		LogLog.QuietMode := true;
+		LogLog.InternalDebugging := true;
+		v_messages := LogLog.Debug('this is the message line');
+		utAssert.eq('CountDebugLines everything true',
+		            v_messages.COUNT,
+		            0);
 	end;
 	
 	procedure ut_Warn is
@@ -102,23 +128,49 @@ package body ut_LogLog is
 		LogLog.InternalDebugging := true;
 		
 		v_messages := LogLog.Warn('this is the message line');
-		utAssert.eq('CountDebugLines',
+		utAssert.eq('CountWarnLines',
 		            v_messages.COUNT,
 		            1);
-		utAssert.eq('CheckLineContent',
+		utAssert.eq('CheckLineContent Warn',
 		            v_messages(1),
 		            'log4oracle-plsql:WARN this is the message line');
 		
 		v_messages := LogLog.Warn('this is an error', 'with an exception');
-		utAssert.eq('CountDebugLines',
+		utAssert.eq('CountWarnLines2',
 		            v_messages.COUNT,
 		            2);
-		utAssert.eq('CheckLineContent',
+		utAssert.eq('CheckLineContent Warn2',
 		            v_messages(1),
 		            'log4oracle-plsql:WARN this is an error');
-		utAssert.eq('CheckLineContent',
+		utAssert.eq('CheckLineContent WarnError',
 		            v_messages(2),
 		            'with an exception');
+	end;
+	
+	procedure ut_WarnModes is
+		v_messages LogLog.StringCollection;
+	begin
+		ut_setup;
+		LogLog.QuietMode := false;
+		LogLog.InternalDebugging := false;
+		v_messages := LogLog.Warn('this is the message line');
+		utAssert.eq('CountWarnLines everything false',
+		            v_messages.COUNT,
+		            1);
+
+		LogLog.QuietMode := true;
+		LogLog.InternalDebugging := false;
+		v_messages := LogLog.Warn('this is the message line');
+		utAssert.eq('CountWarnLines QuiteMode true',
+		            v_messages.COUNT,
+		            0);
+
+		LogLog.QuietMode := true;
+		LogLog.InternalDebugging := true;
+		v_messages := LogLog.Warn('this is the message line');
+		utAssert.eq('CountWarnLines everything true',
+		            v_messages.COUNT,
+		            0);
 	end;
 	
 	procedure ut_Error is
@@ -129,23 +181,49 @@ package body ut_LogLog is
 		LogLog.InternalDebugging := true;
 		
 		v_messages := LogLog.Error('this is the message line');
-		utAssert.eq('CountDebugLines',
+		utAssert.eq('CountErrorLines',
 		            v_messages.COUNT,
 		            1);
-		utAssert.eq('CheckLineContent',
+		utAssert.eq('CheckLineContent Error',
 		            v_messages(1),
 		            'log4oracle-plsql:ERROR this is the message line');
 		
 		v_messages := LogLog.Error('this is an error', 'with an exception');
-		utAssert.eq('CountDebugLines',
+		utAssert.eq('CounterrorLines2',
 		            v_messages.COUNT,
 		            2);
-		utAssert.eq('CheckLineContent',
+		utAssert.eq('CheckLineContent Error2',
 		            v_messages(1),
 		            'log4oracle-plsql:ERROR this is an error');
-		utAssert.eq('CheckLineContent',
+		utAssert.eq('CheckLineContent ErrorError',
 		            v_messages(2),
 		            'with an exception');
+	end;
+	
+	procedure ut_ErrorModes is
+		v_messages LogLog.StringCollection;
+	begin
+		ut_setup;
+		LogLog.QuietMode := false;
+		LogLog.InternalDebugging := false;
+		v_messages := LogLog.Error('this is the message line');
+		utAssert.eq('CountWarnLines everything false',
+		            v_messages.COUNT,
+		            1);
+
+		LogLog.QuietMode := true;
+		LogLog.InternalDebugging := false;
+		v_messages := LogLog.Error('this is the message line');
+		utAssert.eq('CountWarnLines QuietMode true',
+		            v_messages.COUNT,
+		            0);
+
+		LogLog.QuietMode := true;
+		LogLog.InternalDebugging := true;
+		v_messages := LogLog.Error('this is the message line');
+		utAssert.eq('CountWarnLines everything true',
+		            v_messages.COUNT,
+		            0);
 	end;
 	
 end ut_LogLog;

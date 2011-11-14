@@ -21,7 +21,10 @@ package ut_LogLog is
 
 	procedure ut_IsValuesCheck;
 	procedure ut_Debug;
+	procedure ut_DebugModes;
 	procedure ut_Warn;
+	procedure ut_WarnModes;
 	procedure ut_Error;
+	procedure ut_ErrorModes;
 end ut_LogLog;
 /

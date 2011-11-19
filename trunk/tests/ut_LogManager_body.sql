@@ -17,7 +17,7 @@
 create or replace
 package body ut_LogManager is
 	
-	mylog ILog;
+	mylog Logger;
 	
 	procedure ut_setup is
 	begin
@@ -40,7 +40,7 @@ package body ut_LogManager is
 	end;
 	
 	procedure ut_Exists is
-		testlog ILog;
+		testlog Logger;
 	begin
 		/*
 		testlog := LogManager.Exists('ut');
@@ -68,7 +68,7 @@ package body ut_LogManager is
 	begin
 		mylog := LogManager.GetLogger('ut');
 		utAssert.eq('loggers exists',
-		            mylog.m_logger.m_name,
+		            mylog.m_name,
 		            'ut');
 	end;
 	

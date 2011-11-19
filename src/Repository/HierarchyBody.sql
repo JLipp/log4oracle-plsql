@@ -15,21 +15,44 @@
 */
 
 create or replace 
-package body LogManager as
-	
-	function GetLogger(name varchar2) return Logger is
-		m_log Logger;
-	begin
-		m_log := Hierarchy.GetLogger(name);
-		return m_log;
-	end;
+package body Hierarchy as
 
-	function GetCurrentLoggers return LoggerArray is
+  m_ht LoggerArray;
+	
+	procedure Clear is
 	begin
 		raise LogUtil.NotImplementedException; 
 	end;
 	
 	function Exists(name varchar2) return Logger is
+	begin
+		raise LogUtil.NotImplementedException; 
+	end;
+	
+	function GetAppenders return AppenderArray is
+	begin
+		raise LogUtil.NotImplementedException; 
+	end;
+	
+	function GetCurrentLoggers return LoggerArray is
+	begin
+		raise LogUtil.NotImplementedException; 
+	end;
+	
+	function GetLogger(name varchar2) return Logger is
+	begin
+		if Hierarchy.Root is null then
+			Hierarchy.Root := LoggerImpl(0, LogLevel.Debug, 'root', null, AppenderArray());
+		end if;
+		return LoggerImpl(1, null, name, anydata.ConvertObject(Hierarchy.Root), AppenderArray());
+	end;
+	
+	function IsDisabled(level LogLevel) return boolean is
+	begin
+		raise LogUtil.NotImplementedException; 
+	end;
+	
+	procedure Log (event LoggingEvent) is
 	begin
 		raise LogUtil.NotImplementedException; 
 	end;
@@ -44,5 +67,5 @@ package body LogManager as
 		raise LogUtil.NotImplementedException; 
 	end;
 
-end LogManager;
+end Hierarchy;
 /

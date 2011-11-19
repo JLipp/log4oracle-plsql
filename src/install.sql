@@ -65,11 +65,10 @@ set termout on
 prompt &line1
 prompt Droping existing log4oracle-plsql objects
 prompt &line1
+drop package BasicConfigurator;
 drop package LogManager;
-drop package LogRepository;
+drop package Hierarchy;
 drop type ConsoleAppender;
-drop type LogImpl;
-drop type ILog;
 drop type LoggerImpl;
 drop type LoggerArray;
 drop type Logger;
@@ -97,15 +96,14 @@ prompt &line1
 @@Repository/LoggerBody.sql
 @@Repository/LoggerImpl.sql
 @@Repository/LoggerArray.sql
-@@ILog.sql
-@@ILogBody.sql
-@@LogImpl.sql
 @@Appender/ConsoleAppender.sql
 @@Appender/ConsoleAppenderBody.sql
-@@Repository/LogRepository.sql
-@@Repository/LogRepositoryBody.sql
+@@Repository/Hierarchy.sql
+@@Repository/HierarchyBody.sql
 @@LogManager.sql
 @@LogManagerBody.sql
+@@Config/BasicConfigurator.sql
+@@Config/BasicConfiguratorBody.sql
 
 prompt &finished
 set feedback on

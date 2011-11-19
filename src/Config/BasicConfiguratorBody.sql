@@ -15,34 +15,29 @@
 */
 
 create or replace 
-package body LogManager as
+package body BasicConfigurator as
 	
-	function GetLogger(name varchar2) return Logger is
-		m_log Logger;
+	procedure Configure is
 	begin
-		m_log := Hierarchy.GetLogger(name);
-		return m_log;
+		Hierarchy.Root.RemoveAllAppenders;
+		Hierarchy.Root.AddAppender(ConsoleAppender('root'));
 	end;
 
-	function GetCurrentLoggers return LoggerArray is
+	procedure Configure(appender AppenderSkeleton) is
 	begin
-		raise LogUtil.NotImplementedException; 
-	end;
-	
-	function Exists(name varchar2) return Logger is
-	begin
-		raise LogUtil.NotImplementedException; 
-	end;
-	
-	procedure ResetConfiguration is
-	begin
-		raise LogUtil.NotImplementedException; 
-	end;
-	
-	procedure Shutdown is
-	begin
-		raise LogUtil.NotImplementedException; 
+		Hierarchy.Root.RemoveAllAppenders;
+		Hierarchy.Root.AddAppender(appender);
 	end;
 
-end LogManager;
+	procedure Configure(appenders AppenderArray) is
+	begin
+		Hierarchy.Root.RemoveAllAppenders;
+		for i in appenders.FIRST..appenders.LAST loop
+			if appenders.EXISTS(i) then
+				Hierarchy.Root.AddAppender(appenders(i));
+			end if;
+		end loop;
+	end;
+	
+end BasicConfigurator;
 /

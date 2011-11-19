@@ -1,6 +1,6 @@
 /** 
 * Copyright 2011 Juergen Lipp
-*  
+*	
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
 * You may obtain a copy of the License at
@@ -17,39 +17,134 @@
 create or replace 
 type Logger as object
 ( 
-  /**
-  * 
-  * @headcom
-  */
+	/**
+	* 
+	* @headcom
+	*/
 
-  /* Private fields */
-  m_additive integer,
-  m_level LogLevel,
-  m_name varchar2(255),
-  m_parent anydata,
-  m_appenders AppenderArray,
-  
-  /* This is the most generic printing method that is intended to be used by wrappers. */
-  member procedure Log(logEvent LoggingEvent),
-  
-  /* member methods to manager the logger */
-  member procedure AddAppender(appender AppenderSkeleton),
-  member function GetAllAppenders return AppenderSkeleton,
-  member function GetAppender return AppenderSkeleton,
-  member procedure RemoveAllAppenders,
-  member procedure RemoveAppender(name varchar2),
-  member procedure RemoveAppender(appender AppenderSkeleton),
-  
-  member function GetAdditivity return boolean,
-  member procedure SetAdditivity(value boolean),
-  member function GetEffectiveLevel return LogLevel,
-  member function GetLevel return LogLevel,
-  member procedure SetLevel(logLevel LogLevel),
-  member function GetLoggerRepository return varchar2,
-  member function GetName return varchar2,
-  member function GetParent return Logger,
-  member function IsEnabledFor(logLevel LogLevel) return boolean
-  
+	/* Private fields */
+	m_additive number,
+	m_level LogLevel,
+	m_name varchar2(255),
+	m_parent anydata,
+	m_appenders AppenderArray,
+	
+	/**
+	* Checks if this logger is enabled for the Debug level.
+	*/
+	member function IsDebugEnabled return boolean,
+
+	/**
+	* Checks if this logger is enabled for the Info level.
+	*/
+	member function IsInfoEnabled return boolean,
+
+	/**
+	* Checks if this logger is enabled for the Warn level.
+	*/
+	member function IsWarnEnabled return boolean,
+
+	/**
+	* Checks if this logger is enabled for the Error level.
+	*/
+	member function IsErrorEnabled return boolean,
+
+	/**
+	* Checks if this logger is enabled for the Fatal level.
+	*/
+	member function IsFatalEnabled return boolean,
+	
+	/**
+	* Log a message with the Debug level.
+	* @param message The message to log.
+	*/
+	member procedure Debug(message varchar2),
+
+	/**
+	* Log a message with the Info level.
+	* @param message The message to log.
+	*/
+	member procedure Info(message varchar2),
+
+	/**
+	* Log a message with the Error level.
+	* @param message The message to log.
+	*/
+	member procedure Error(message varchar2),
+
+	/**
+	* Log a message with the Warn level.
+	* @param message The message to log.
+	*/
+	member procedure Warn(message varchar2),
+
+	/**
+	* Log a message with the Fatal level.
+	* @param message The message to log.
+	*/
+	member procedure Fatal(message varchar2),
+
+	/**
+	* Log a message with the Debug level including the an exception passed 
+	* as a parameter.
+	* @param message The message to log.
+	* @param error The exception to log.
+	*/
+	member procedure Debug(message varchar2, error varchar2),
+
+	/**
+	* Log a message with the Info level including the an exception passed 
+	* as a parameter.
+	* @param message The message to log.
+	* @param error The exception to log.
+	*/
+	member procedure Info(message varchar2, error varchar2),
+
+	/**
+	* Log a message with the Warn level including the an exception passed 
+	* as a parameter.
+	* @param message The message to log.
+	* @param error The exception to log.
+	*/
+	member procedure Warn(message varchar2, error varchar2),
+
+	/**
+	* Log a message with the Error level including the an exception passed 
+	* as a parameter.
+	* @param message The message to log.
+	* @param error The exception to log.
+	*/
+	member procedure Error(message varchar2, error varchar2),
+
+	/**
+	* Log a message with the Fatal level including the an exception passed 
+	* as a parameter.
+	* @param message The message to log.
+	* @param error The exception to log.
+	*/
+	member procedure Fatal(message varchar2, error varchar2),
+	
+	/* This is the most generic printing method that is intended to be used by wrappers. */
+	member procedure Log(logEvent LoggingEvent),
+	
+	/* member methods to manager the logger */
+	member procedure AddAppender(appender AppenderSkeleton),
+	member function GetAllAppenders return AppenderArray,
+	member function GetAppender(name varchar2) return AppenderSkeleton,
+	member procedure RemoveAllAppenders,
+	member procedure RemoveAppender(name varchar2),
+	member procedure RemoveAppender(appender AppenderSkeleton),
+	
+	member function GetAdditivity return boolean,
+	member procedure SetAdditivity(value boolean),
+	member function GetEffectiveLevel return LogLevel,
+	member function GetLevel return LogLevel,
+	member procedure SetLevel(logLevel LogLevel),
+	member function GetLoggerRepository return varchar2,
+	member function GetName return varchar2,
+	member function GetParent return Logger,
+	member function IsEnabledFor(logLevel LogLevel) return boolean
+	
 )
 not final not instantiable;
 /

@@ -21,7 +21,7 @@ type LoggingEvent as object
 	LLevel LogLevel, -- Level of logging event.
 	LoggerName varchar2(255), -- The logger name.
 	Message varchar2(4000), -- The application supplied message.
-	DateTime timestamp(3), -- The time the event was logged
+	DateTime timestamp(3) with time zone, -- The time the event was logged
 	UserName varchar2(255), -- String representation of the user
 	
 	constructor function LoggingEvent(loggerName varchar2, logLevel LogLevel, message varchar2, showError boolean) return self as result

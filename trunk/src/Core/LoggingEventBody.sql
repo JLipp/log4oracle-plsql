@@ -21,7 +21,7 @@ type body LoggingEvent as
 	begin
 		self.LoggerName := loggerName;
 		self.LLevel := logLevel;
-		self.DateTime := SYSTIMESTAMP;
+		self.DateTime := CURRENT_TIMESTAMP;
 		self.UserName := user;
 		self.Message := message;
 		if showError then

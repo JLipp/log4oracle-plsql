@@ -30,6 +30,7 @@ type body LogLevel as
     
     -- only known log levels are allowed, others are null
     if not self.Name is null then
+      self.DisplayName := self.Name;
       self.Value := logLevel;
     end if;
     

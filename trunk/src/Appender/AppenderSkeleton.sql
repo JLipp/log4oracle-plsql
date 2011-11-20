@@ -27,7 +27,12 @@ type AppenderSkeleton as object
 	*
 	* @headcom
 	*/
-
+	
+	/**
+	* Gets or sets the <see cref="ILayout"/> for this appender.
+	*/
+	Layout LayoutSkeleton,
+	
 	/**
 	* The name of this appender.
 	*/
@@ -45,6 +50,25 @@ type AppenderSkeleton as object
 	* @param loggingEvent The event to log.
 	*/
 	member procedure DoAppend(loggingEvent LoggingEvent),
+	
+	/**
+	* Helper method to render a <see cref="LoggingEvent"/> to 
+		/// a string. This appender must have a <see cref="Layout"/>
+		/// set to render the <paramref name="loggingEvent"/> to 
+		/// a string.
+		/// </para>
+		/// <para>If there is exception data in the logging event and 
+		/// the layout does not process the exception, this method 
+		/// will append the exception text to the rendered string.
+		/// </para>
+		/// <para>
+		/// Use this method in preference to <see cref="RenderLoggingEvent(LoggingEvent)"/>
+		/// where possible. If, however, the caller needs to render the event
+		/// to a string then <see cref="RenderLoggingEvent(LoggingEvent)"/> does
+		/// provide an efficient mechanism for doing so.
+	* @param loggingEvent The event to render.
+	*/
+	member function RenderLoggingEvent(loggingEvent LoggingEvent) return varchar2,
 	
 	/**
 	* A subclass must implement this method to perform logging of the 

@@ -18,15 +18,20 @@ create or replace
 package body BasicConfigurator as
 	
 	procedure Configure is
+		l_appender ConsoleAppender;
+		l_layout PatternLayout;
 	begin
-		Hierarchy.Root.RemoveAllAppenders;
-		Hierarchy.Root.AddAppender(ConsoleAppender('root'));
+		l_appender := ConsoleAppender('root');
+		l_layout := new PatternLayout();
+		l_layout.ConversionPattern := LogUtil.DetailConversionPattern;
+		l_layout.ActivateOptions;
+		l_appender.Layout := l_layout;
+		Configure(l_appender);
 	end;
 
 	procedure Configure(appender AppenderSkeleton) is
 	begin
-		Hierarchy.Root.RemoveAllAppenders;
-		Hierarchy.Root.AddAppender(appender);
+		Configure(AppenderArray(appender));
 	end;
 
 	procedure Configure(appenders AppenderArray) is

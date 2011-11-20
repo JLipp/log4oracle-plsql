@@ -37,7 +37,7 @@ type ConsoleAppender under AppenderSkeleton
 	/**
 	* Initializes a new instance of the ConsoleAppender class.
 	*/
-	constructor function ConsoleAppender(name varchar2) return self as result,
+	constructor function ConsoleAppender(name varchar2 default null) return self as result,
 
 	/**
 	* Writes the event to the console.

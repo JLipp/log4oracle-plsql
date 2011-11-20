@@ -93,14 +93,14 @@ package body LogLog as
 	procedure Error(message varchar2, perror varchar2 default null) as
 		v_messages StringCollection;
 	begin
-		v_messages := Error(message, perror);
+		v_messages := Error(message, perror||dbms_utility.format_error_stack||dbms_utility.format_error_backtrace);
 	end;
 
 	function Error(message varchar2, perror varchar2 default null)  return StringCollection as
 		v_messages StringCollection;
 	begin
 		if IsErrorEnabled then
-			v_messages := ForceLog(ERR_PREFIX, message, perror);
+			v_messages := ForceLog(ERR_PREFIX, message, perror||dbms_utility.format_error_stack||dbms_utility.format_error_backtrace);
 		end if;
 		return v_messages;
 	end;

@@ -42,54 +42,29 @@ type body Logger as
 		return IsEnabledFor(LogLevel.Warn);
 	end;
 	
-	member procedure Debug(message varchar2) as
+	member procedure Debug(message varchar2, showError boolean default false) as
 	begin
-		Log(LoggingEvent(m_name, LogLevel.Debug, message, null));
+		Log(LoggingEvent(m_name, LogLevel.Debug, message, showError));
 	end;
 	
-	member procedure Debug(message varchar2, error varchar2) as
+	member procedure Error(message varchar2, showError boolean default true) as
 	begin
-		Log(LoggingEvent(m_name, LogLevel.Debug, message, error));
+		Log(LoggingEvent(m_name, LogLevel.Error, message, showError));
 	end;
 	
-	member procedure Error(message varchar2) as
+	member procedure Fatal(message varchar2, showError boolean default true) as
 	begin
-		Log(LoggingEvent(m_name, LogLevel.Error, message, null));
+		Log(LoggingEvent(m_name, LogLevel.Fatal, message, showError));
 	end;
 	
-	member procedure Error(message varchar2, error varchar2) as
+	member procedure Info(message varchar2, showError boolean default false) as
 	begin
-		Log(LoggingEvent(m_name, LogLevel.Error, message, error));
+		Log(LoggingEvent(m_name, LogLevel.Info, message, showError));
 	end;
 	
-	member procedure Fatal(message varchar2) as
+	member procedure Warn(message varchar2, showError boolean default false) as
 	begin
-		Log(LoggingEvent(m_name, LogLevel.Fatal, message, null));
-	end;
-	
-	member procedure Fatal(message varchar2, error varchar2) as
-	begin
-		Log(LoggingEvent(m_name, LogLevel.Fatal, message, error));
-	end;
-	
-	member procedure Info(message varchar2) as
-	begin
-		Log(LoggingEvent(m_name, LogLevel.Info, message, null));
-	end;
-	
-	member procedure Info(message varchar2, error varchar2) as
-	begin
-		Log(LoggingEvent(m_name, LogLevel.Info, message, error));
-	end;
-	
-	member procedure Warn(message varchar2) as
-	begin
-		Log(LoggingEvent(m_name, LogLevel.Warn, message, null));
-	end;
-	
-	member procedure Warn(message varchar2, error varchar2) as
-	begin
-		Log(LoggingEvent(m_name, LogLevel.Warn, message, error));
+		Log(LoggingEvent(m_name, LogLevel.Warn, message, showError));
 	end;
 	
 	member procedure Log(logEvent LoggingEvent) as

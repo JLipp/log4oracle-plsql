@@ -26,7 +26,10 @@ type body ConsoleAppender as
 	
 	overriding member procedure Append(loggingEvent LoggingEvent) as
 	begin
-		dbms_output.put_line('['||loggingEvent.LoggerName||'] '||loggingEvent.LLevel.Name||' - '||loggingEvent.Message||' '||loggingEvent.ExceptionString);
+		dbms_output.put_line('['||loggingEvent.LoggerName||'] '||loggingEvent.LLevel.Name||' - '||loggingEvent.Message);
+		if loggingEvent.ExceptionString is not null then
+			dbms_output.put_line(loggingEvent.ExceptionString);
+		end if;
 	end;
 	
 end;

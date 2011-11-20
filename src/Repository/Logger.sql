@@ -57,72 +57,38 @@ type Logger as object
 	/**
 	* Log a message with the Debug level.
 	* @param message The message to log.
+	* @param showError Display error and stack in log file, default false.
 	*/
-	member procedure Debug(message varchar2),
+	member procedure Debug(message varchar2, showError boolean default false),
 
 	/**
 	* Log a message with the Info level.
 	* @param message The message to log.
+	* @param showError Display error and stack in log file, default false.
 	*/
-	member procedure Info(message varchar2),
+	member procedure Info(message varchar2, showError boolean default false),
 
 	/**
 	* Log a message with the Error level.
 	* @param message The message to log.
+	* @param showError Display error and stack in log file, default true.
 	*/
-	member procedure Error(message varchar2),
+	member procedure Error(message varchar2, showError boolean default true),
 
 	/**
 	* Log a message with the Warn level.
 	* @param message The message to log.
+	* @param showError Display error and stack in log file, default false.
 	*/
-	member procedure Warn(message varchar2),
+	member procedure Warn(message varchar2, showError boolean default false),
 
 	/**
 	* Log a message with the Fatal level.
 	* @param message The message to log.
+	* @param showError Display error and stack in log file, default true.
 	*/
-	member procedure Fatal(message varchar2),
+	member procedure Fatal(message varchar2, showError boolean default true),
 
-	/**
-	* Log a message with the Debug level including the an exception passed 
-	* as a parameter.
-	* @param message The message to log.
-	* @param error The exception to log.
-	*/
-	member procedure Debug(message varchar2, error varchar2),
-
-	/**
-	* Log a message with the Info level including the an exception passed 
-	* as a parameter.
-	* @param message The message to log.
-	* @param error The exception to log.
-	*/
-	member procedure Info(message varchar2, error varchar2),
-
-	/**
-	* Log a message with the Warn level including the an exception passed 
-	* as a parameter.
-	* @param message The message to log.
-	* @param error The exception to log.
-	*/
-	member procedure Warn(message varchar2, error varchar2),
-
-	/**
-	* Log a message with the Error level including the an exception passed 
-	* as a parameter.
-	* @param message The message to log.
-	* @param error The exception to log.
-	*/
-	member procedure Error(message varchar2, error varchar2),
-
-	/**
-	* Log a message with the Fatal level including the an exception passed 
-	* as a parameter.
-	* @param message The message to log.
-	* @param error The exception to log.
-	*/
-	member procedure Fatal(message varchar2, error varchar2),
 	
 	/* This is the most generic printing method that is intended to be used by wrappers. */
 	member procedure Log(logEvent LoggingEvent),

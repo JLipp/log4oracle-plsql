@@ -43,6 +43,8 @@ package body LogManager as
 	begin
 		raise LogUtil.NotImplementedException; 
 	end;
-
+	
+begin
+	dbms_output.enable();
 end LogManager;
 /

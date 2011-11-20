@@ -16,13 +16,16 @@
 
 create or replace 
 package LogUtil as
-  /** 
-  * LogUtil
-  * @headcom
-  */  
-  
-  NotImplementedException exception;
-  ArgumentNullException exception;
-
+	/** 
+	* LogUtil
+	* @headcom
+	*/
+	
+	NotImplementedException exception;
+	ArgumentNullException exception;
+	
+	DefaultConversionPattern  constant varchar2(255) := '%message%newline';
+	DetailConversionPattern   constant varchar2(255) := '%d [%w] %-5level %logger - %m%newline';
+	
 end LogUtil;
 /

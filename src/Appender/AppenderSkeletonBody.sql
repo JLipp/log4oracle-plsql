@@ -16,7 +16,18 @@
 
 create or replace 
 type body AppenderSkeleton as
-
+	
+	member function RenderLoggingEvent(loggingEvent LoggingEvent) return varchar2 as
+		writer varchar2(32767);
+	begin
+		writer := self.Layout.Format(loggingEvent);
+		if loggingEvent.ExceptionString is not null and
+		   self.Layout.IgnoresException >= 1 then
+			writer := writer||chr(13)||chr(10)||loggingEvent.ExceptionString;
+		end if;
+		return writer;
+	end;
+	
 	member procedure DoAppend(loggingEvent LoggingEvent) as
 	begin
 		if (loggingEvent.LLevel >= Treshold) then

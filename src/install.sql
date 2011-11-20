@@ -74,6 +74,13 @@ drop type LoggerArray;
 drop type Logger;
 drop type AppenderArray;
 drop type AppenderSkeleton;
+drop type SimpleLayout;
+drop type PatternLayout;
+drop package PatternParser;
+drop type PatternConverterArray;
+drop type PatternConverter;
+drop type ExceptionLayout;
+drop type LayoutSkeleton;
 drop type LoggingEvent;
 drop type LogLevel;
 drop package LogUtil;
@@ -89,6 +96,19 @@ prompt &line1
 @@Core/LogLevelBody.sql
 @@Core/LoggingEvent.sql
 @@Core/LoggingEventBody.sql
+@@Layout/LayoutSkeleton.sql
+@@Layout/LayoutSkeletonBody.sql
+@@Layout/SimpleLayout.sql
+@@Layout/SimpleLayoutBody.sql
+@@Layout/ExceptionLayout.sql
+@@Layout/ExceptionLayoutBody.sql
+@@Util/PatternConverter.sql
+@@Util/PatternConverterBody.sql
+@@Util/PatternConverterArray.sql
+@@Util/PatternParser.sql
+@@Util/PatternParserBody.sql
+@@Layout/PatternLayout.sql
+@@Layout/PatternLayoutBody.sql
 @@Appender/AppenderSkeleton.sql
 @@Appender/AppenderSkeletonBody.sql
 @@Appender/AppenderArray.sql

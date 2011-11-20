@@ -1,6 +1,6 @@
 /** 
 * Copyright 2011 Juergen Lipp
-*
+*	
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
 * You may obtain a copy of the License at
@@ -15,18 +15,27 @@
 */
 
 create or replace 
-type body ConsoleAppender as
-
-	constructor function ConsoleAppender(name varchar2) return self as result as
+type body LayoutSkeleton as
+	
+	not final member procedure ActivateOptions is
 	begin
-		self.Name := name;
-		self.Treshold := LogLevel.Debug;
-		return;
+		null;
 	end;
 	
-	overriding member procedure Append(loggingEvent LoggingEvent) as
+	not final member function Format(event LoggingEvent) return varchar2 is
 	begin
-		dbms_output.put_line(self.RenderLoggingEvent(loggingEvent));
+		null;
+	end;
+	
+	member function GetContentType return string is
+	begin
+		return 'text/plain';
+	end;
+	
+	constructor function LayoutSkeleton return self as result is
+	begin
+		self.IgnoresException := 1;
+		return;
 	end;
 	
 end;

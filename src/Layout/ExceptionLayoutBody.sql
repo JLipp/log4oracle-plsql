@@ -1,6 +1,6 @@
 /** 
 * Copyright 2011 Juergen Lipp
-*
+*	
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
 * You may obtain a copy of the License at
@@ -15,18 +15,27 @@
 */
 
 create or replace 
-type body ConsoleAppender as
-
-	constructor function ConsoleAppender(name varchar2) return self as result as
+type body ExceptionLayout as
+	
+	overriding member procedure ActivateOptions is
 	begin
-		self.Name := name;
-		self.Treshold := LogLevel.Debug;
-		return;
+		/* nothing to do. */
+		null;
 	end;
 	
-	overriding member procedure Append(loggingEvent LoggingEvent) as
+	overriding member function Format(event LoggingEvent) return varchar2 is
 	begin
-		dbms_output.put_line(self.RenderLoggingEvent(loggingEvent));
+		if event is null then
+			raise LogUtil.ArgumentNullException;
+		end if;
+		
+		return event.ExceptionString;
+	end;
+	
+	constructor function ExceptionLayout return self as result is
+	begin
+		self.IgnoresException := 0;
+		return;
 	end;
 	
 end;

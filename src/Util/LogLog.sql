@@ -123,5 +123,35 @@ package LogLog as
 	*/
 	function Error(message varchar2, perror varchar2 default null) return StringCollection;
 	
+	/**
+	* Implements default error handling policy which consists of
+	* eimitting a message for the first error in an appender and
+	* ignoring all subsequent errors.
+	* <br/>
+	* The package saves a counter per perfix parameter and only
+	* logs the error if it is the very first cause per object.
+	* @param prefix The object where the error occured.
+	* @param message The message to log.
+	*/
+	procedure ErrorHandler(prefix varchar2, message varchar2);
+
+	/**
+	* Implements default error handling policy which consists of
+	* eimitting a message for the first error in an appender and
+	* ignoring all subsequent errors.
+	* <br/>
+	* The package saves a counter per perfix parameter and only
+	* logs the error if it is the very first cause per object.
+	* @param prefix The object where the error occured.
+	* @param message The message to log.
+	* @return Collection of output lines.
+	*/
+	function ErrorHandler(prefix varchar2, message varchar2) return StringCollection;
+	
+	/**
+	* Reset the error handler back to its initial disabled state.
+	*/
+	procedure ResetErrorHandler;
+	
 end LogLog;
 /

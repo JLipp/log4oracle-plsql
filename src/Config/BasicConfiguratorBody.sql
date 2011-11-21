@@ -37,6 +37,7 @@ package body BasicConfigurator as
 	procedure Configure(appenders AppenderArray) is
 	begin
 		Hierarchy.Root.RemoveAllAppenders;
+		LogLog.ResetErrorHandler;
 		for i in appenders.FIRST..appenders.LAST loop
 			if appenders.EXISTS(i) then
 				Hierarchy.Root.AddAppender(appenders(i));

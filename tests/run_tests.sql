@@ -1,3 +1,4 @@
+clear screen
 @@ut_LogLevel.sql
 @@ut_LogLevel_body.sql
 @@ut_LogManager.sql

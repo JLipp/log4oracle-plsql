@@ -20,6 +20,12 @@ package body LogLog as
 	PREFIX      constant varchar2(25) := 'log4oracle-plsql: ';
 	ERR_PREFIX  constant varchar2(25) := 'log4oracle-plsql:ERROR ';
 	WARN_PREFIX constant varchar2(25) := 'log4oracle-plsql:WARN ';
+	CRLF        constant varchar2(2) := chr(13)||chr(10);
+	
+	type FirstTimeTable is table of boolean
+		index by varchar2(32767);
+		
+	ErrorHandlerPrefixCounter FirstTimeTable;
 	
 	procedure EmitOutLine(message varchar2) as
 	begin
@@ -93,16 +99,43 @@ package body LogLog as
 	procedure Error(message varchar2, perror varchar2 default null) as
 		v_messages StringCollection;
 	begin
-		v_messages := Error(message, perror||dbms_utility.format_error_stack||dbms_utility.format_error_backtrace);
+		v_messages := Error(message, perror);
 	end;
 
 	function Error(message varchar2, perror varchar2 default null)  return StringCollection as
 		v_messages StringCollection;
 	begin
 		if IsErrorEnabled then
-			v_messages := ForceLog(ERR_PREFIX, message, perror||dbms_utility.format_error_stack||dbms_utility.format_error_backtrace);
+			if perror is null then
+				v_messages := ForceLog(ERR_PREFIX, message, dbms_utility.format_error_stack||dbms_utility.format_error_backtrace);
+			else
+				v_messages := ForceLog(ERR_PREFIX, message, perror||CRLF||dbms_utility.format_error_stack||dbms_utility.format_error_backtrace);
+			end if;
 		end if;
 		return v_messages;
+	end;
+	
+	procedure ErrorHandler(prefix varchar2, message varchar2) as
+		v_messages StringCollection;
+	begin
+		v_messages := ErrorHandler(prefix, message);
+	end;
+	
+	function ErrorHandler(prefix varchar2, message varchar2) return StringCollection as
+		nullReturn StringCollection;
+	begin
+		if not ErrorHandlerPrefixCounter.EXISTS(prefix) then
+			ErrorHandlerPrefixCounter(prefix) := false;
+			if InternalDebugging and not QuietMode then
+				return LogLog.Error('['||prefix||'] '||message);
+			end if;
+		end if;
+		return nullReturn;
+	end;
+	
+	procedure ResetErrorHandler as
+	begin
+		ErrorHandlerPrefixCounter.DELETE;
 	end;
 	
 begin

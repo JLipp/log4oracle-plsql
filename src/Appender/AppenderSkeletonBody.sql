@@ -17,14 +17,32 @@
 create or replace 
 type body AppenderSkeleton as
 	
+	member procedure ActivateOptions as
+	begin
+		null;
+	end;
+	
 	member function RenderLoggingEvent(loggingEvent LoggingEvent) return varchar2 as
 		writer varchar2(32767);
 	begin
-		writer := self.Layout.Format(loggingEvent);
-		if loggingEvent.ExceptionString is not null and
-		   self.Layout.IgnoresException >= 1 then
-			writer := writer||chr(13)||chr(10)||loggingEvent.ExceptionString;
+		if Layout is null then
+			raise LogUtil.LayoutMissingException;
 		end if;
+		
+		if self.Layout.IgnoresException >= 1 then
+			if trim(loggingEvent.ExceptionString) is not null then
+				-- render the event and the exception
+				writer := self.Layout.Format(loggingEvent);
+				writer := writer||chr(13)||chr(10)||loggingEvent.ExceptionString;
+			else
+				-- there is no exception to render
+				writer := self.Layout.Format(loggingEvent);
+			end if;
+		else
+			-- The layout will render the exception
+			writer := self.Layout.Format(loggingEvent);
+		end if;
+		
 		return writer;
 	end;
 	
@@ -33,6 +51,9 @@ type body AppenderSkeleton as
 		if (loggingEvent.LLevel >= Treshold) then
 			Append(loggingEvent);
 		end if;
+	exception
+		when others then
+			LogLog.ErrorHandler('AppenderSkeleton', 'Failed in DoAppend');
 	end;
 	
 	not final member procedure Append(loggingEvent LoggingEvent) as

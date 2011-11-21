@@ -26,5 +26,6 @@ package ut_LogLog is
 	procedure ut_WarnModes;
 	procedure ut_Error;
 	procedure ut_ErrorModes;
+	procedure ut_ErrorHandler;
 end ut_LogLog;
 /

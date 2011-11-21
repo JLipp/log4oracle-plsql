@@ -23,6 +23,7 @@ package LogUtil as
 	
 	NotImplementedException exception;
 	ArgumentNullException exception;
+	LayoutMissingException exception;
 	
 	DefaultConversionPattern  constant varchar2(255) := '%message%newline';
 	DetailConversionPattern   constant varchar2(255) := '%d [%w] %-5level %logger - %m%newline';

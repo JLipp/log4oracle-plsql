@@ -188,16 +188,19 @@ package body ut_LogLog is
 		            v_messages(1),
 		            'log4oracle-plsql:ERROR this is the message line');
 		
-		v_messages := LogLog.Error('this is an error', 'with an exception');
-		utAssert.eq('CounterrorLines2',
-		            v_messages.COUNT,
-		            2);
-		utAssert.eq('CheckLineContent Error2',
-		            v_messages(1),
-		            'log4oracle-plsql:ERROR this is an error');
-		utAssert.eq('CheckLineContent ErrorError',
-		            v_messages(2),
-		            'with an exception');
+		raise no_data_found;
+	exception
+		when no_data_found then
+			v_messages := LogLog.Error('this is an error', 'with an exception');
+			utAssert.eq('CounterrorLines2',
+									v_messages.COUNT,
+									2);
+			utAssert.eq('CheckLineContent Error2',
+									v_messages(1),
+									'log4oracle-plsql:ERROR this is an error');
+			utAssert.eq('CheckLineContent ErrorError',
+									substr(v_messages(2), 1, 17),
+									'with an exception');
 	end;
 	
 	procedure ut_ErrorModes is
@@ -224,6 +227,29 @@ package body ut_LogLog is
 		utAssert.eq('CountWarnLines everything true',
 		            v_messages.COUNT,
 		            0);
+	end;
+	
+	procedure ut_ErrorHandler is
+		v_messages LogLog.StringCollection;
+		v_prefix1 varchar2(20) := 'pref1';
+		v_prefix2 varchar2(20) := 'pref2';
+	begin
+		ut_setup;
+		LogLog.QuietMode := false;
+		LogLog.InternalDebugging := true;
+		LogLog.ResetErrorHandler;
+		v_messages := LogLog.ErrorHandler(v_prefix1, 'This line is printed!');
+		utAssert.eq('First ErrorHandler line',
+		            v_messages.COUNT,
+		            1);
+		v_messages := LogLog.ErrorHandler(v_prefix1, 'This line is not printed because second line.');
+		utAssert.eq('Second ErrorHandler line',
+		            v_messages.COUNT,
+		            0);
+		v_messages := LogLog.ErrorHandler(v_prefix2, 'This line is printed because different prefix.');
+		utAssert.eq('Next ErrorHandler line differnt prefix',
+		            v_messages.COUNT,
+		            1);
 	end;
 	
 end ut_LogLog;

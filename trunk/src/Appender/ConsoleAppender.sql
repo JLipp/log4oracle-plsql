@@ -46,7 +46,15 @@ type ConsoleAppender under AppenderSkeleton
 	*
 	* @param loggingEvent The event to log.
 	*/
-	overriding member procedure Append(loggingEvent LoggingEvent)
+	overriding member procedure Append(loggingEvent LoggingEvent),
+	
+	/**
+	* Gets the unit name of the appender which is needed for error
+	* log output. This function should always return $$PLSQL_UNIT.
+	* @return The unit name of the appender.
+	*/
+	overriding member function GetUnitName return varchar2
+	
 )
 final instantiable;
 /

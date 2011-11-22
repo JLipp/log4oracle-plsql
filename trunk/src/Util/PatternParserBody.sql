@@ -169,7 +169,7 @@ begin
 		new PatternConverter('d',        'to_char(event.DateTime, ''yyyy-mm-dd hh24:mi:ss,ff3'')'),
 		new PatternConverter('date',     'to_char(event.DateTime, ''yyyy-mm-dd hh24:mi:ss,ff3'')'),
 		
-		new PatternConverter('exception', 'event.ExceptionString'),
+		new PatternConverter('exception', 'event.ExceptionString.Format()'),
 		
 		new PatternConverter('m',         'event.Message'),
 		new PatternConverter('message',   'event.Message'),

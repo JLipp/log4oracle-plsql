@@ -57,38 +57,67 @@ type Logger as object
 	/**
 	* Log a message with the Debug level.
 	* @param message The message to log.
+	*/
+	member procedure Debug(message varchar2),
+	
+	/**
+	* Log a message with the Debug level.
+	* @param message The message to log.
 	* @param showError Display error and stack in log file, default false.
 	*/
-	member procedure Debug(message varchar2, showError boolean default false),
-
+	member procedure Debug(message varchar2, perror GenericException),
+	
+	/**
+	* Log a message with the Info level.
+	* @param message The message to log.
+	*/
+	member procedure Info(message varchar2),
+	
 	/**
 	* Log a message with the Info level.
 	* @param message The message to log.
 	* @param showError Display error and stack in log file, default false.
 	*/
-	member procedure Info(message varchar2, showError boolean default false),
-
+	member procedure Info(message varchar2, perror GenericException),
+	
+	/**
+	* Log a message with the Error level.
+	* @param message The message to log.
+	*/
+	member procedure Error(message varchar2),
+	
 	/**
 	* Log a message with the Error level.
 	* @param message The message to log.
 	* @param showError Display error and stack in log file, default true.
 	*/
-	member procedure Error(message varchar2, showError boolean default true),
-
+	member procedure Error(message varchar2, perror GenericException),
+	
+	/**
+	* Log a message with the Warn level.
+	* @param message The message to log.
+	*/
+	member procedure Warn(message varchar2),
+	
 	/**
 	* Log a message with the Warn level.
 	* @param message The message to log.
 	* @param showError Display error and stack in log file, default false.
 	*/
-	member procedure Warn(message varchar2, showError boolean default false),
-
+	member procedure Warn(message varchar2, perror GenericException),
+	
+	/**
+	* Log a message with the Fatal level.
+	* @param message The message to log.
+	*/
+	member procedure Fatal(message varchar2),
+	
 	/**
 	* Log a message with the Fatal level.
 	* @param message The message to log.
 	* @param showError Display error and stack in log file, default true.
 	*/
-	member procedure Fatal(message varchar2, showError boolean default true),
-
+	member procedure Fatal(message varchar2, perror GenericException),
 	
 	/* This is the most generic printing method that is intended to be used by wrappers. */
 	member procedure Log(logEvent LoggingEvent),

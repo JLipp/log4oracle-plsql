@@ -83,6 +83,7 @@ drop type ExceptionLayout;
 drop type LayoutSkeleton;
 drop type LoggingEvent;
 drop type LogLevel;
+drop type GenericException;
 drop package LogUtil;
 
 prompt &line1
@@ -90,6 +91,8 @@ prompt Creating log4oracle-plsql objects
 prompt &line1
 @@Util/LogUtil.sql
 @@Util/LogUtilBody.sql
+@@Util/GenericException.sql
+@@Util/GenericExceptionBody.sql
 @@Util/LogLog.sql
 @@Util/LogLogBody.sql
 @@Core/LogLevel.sql

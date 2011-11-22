@@ -27,6 +27,7 @@ package LogUtil as
 	
 	DefaultConversionPattern  constant varchar2(255) := '%message%newline';
 	DetailConversionPattern   constant varchar2(255) := '%d [%w] %-5level %logger - %m%newline';
+	CRLF                      constant varchar2(2) := chr(13)||chr(10);
 	
 end LogUtil;
 /

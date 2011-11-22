@@ -30,10 +30,10 @@ type body AppenderSkeleton as
 		end if;
 		
 		if self.Layout.IgnoresException >= 1 then
-			if trim(loggingEvent.ExceptionString) is not null then
+			if loggingEvent.ExceptionObject is not null then
 				-- render the event and the exception
 				writer := self.Layout.Format(loggingEvent);
-				writer := writer||chr(13)||chr(10)||loggingEvent.ExceptionString;
+				writer := writer||chr(13)||chr(10)||loggingEvent.ExceptionObject.Format();
 			else
 				-- there is no exception to render
 				writer := self.Layout.Format(loggingEvent);
@@ -53,12 +53,17 @@ type body AppenderSkeleton as
 		end if;
 	exception
 		when others then
-			LogLog.ErrorHandler('AppenderSkeleton', 'Failed in DoAppend');
+			LogLog.ErrorHandler(self.GetUnitName, 'Failed in DoAppend');
 	end;
 	
 	not final member procedure Append(loggingEvent LoggingEvent) as
 	begin
 		null;
+	end;
+	
+	not final member function GetUnitName return varchar2 as
+	begin
+		return $$PLSQL_UNIT;
 	end;
 	
 end;

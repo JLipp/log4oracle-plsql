@@ -75,7 +75,15 @@ type AppenderSkeleton as object
 	* in the appender override the PreAppendCheck method.
 	* @param loggingEvent The event to log.
 	*/
-	not final member procedure Append(loggingEvent LoggingEvent)
+	not final member procedure Append(loggingEvent LoggingEvent),
+	
+	/**
+	* Gets the unit name of the appender which is needed for error
+	* log output. This function should always return $$PLSQL_UNIT.
+	* @return The unit name of the appender.
+	*/
+	not final member function GetUnitName return varchar2
+	
 )
 not final not instantiable;
 /

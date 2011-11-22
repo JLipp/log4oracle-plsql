@@ -42,29 +42,54 @@ type body Logger as
 		return IsEnabledFor(LogLevel.Warn);
 	end;
 	
-	member procedure Debug(message varchar2, showError boolean default false) as
+	member procedure Debug(message varchar2) as
 	begin
-		Log(LoggingEvent(m_name, LogLevel.Debug, message, showError));
+		Log(LoggingEvent(m_name, LogLevel.Debug, message, null));
 	end;
 	
-	member procedure Error(message varchar2, showError boolean default true) as
+	member procedure Debug(message varchar2, perror GenericException) as
 	begin
-		Log(LoggingEvent(m_name, LogLevel.Error, message, showError));
+		Log(LoggingEvent(m_name, LogLevel.Debug, message, perror));
 	end;
 	
-	member procedure Fatal(message varchar2, showError boolean default true) as
+	member procedure Error(message varchar2) as
 	begin
-		Log(LoggingEvent(m_name, LogLevel.Fatal, message, showError));
+		Log(LoggingEvent(m_name, LogLevel.Error, message, null));
 	end;
 	
-	member procedure Info(message varchar2, showError boolean default false) as
+	member procedure Error(message varchar2, perror GenericException) as
 	begin
-		Log(LoggingEvent(m_name, LogLevel.Info, message, showError));
+		Log(LoggingEvent(m_name, LogLevel.Error, message, perror));
 	end;
 	
-	member procedure Warn(message varchar2, showError boolean default false) as
+	member procedure Fatal(message varchar2) as
 	begin
-		Log(LoggingEvent(m_name, LogLevel.Warn, message, showError));
+		Log(LoggingEvent(m_name, LogLevel.Fatal, message, null));
+	end;
+	
+	member procedure Fatal(message varchar2, perror GenericException) as
+	begin
+		Log(LoggingEvent(m_name, LogLevel.Fatal, message, perror));
+	end;
+	
+	member procedure Info(message varchar2) as
+	begin
+		Log(LoggingEvent(m_name, LogLevel.Info, message, null));
+	end;
+	
+	member procedure Info(message varchar2, perror GenericException) as
+	begin
+		Log(LoggingEvent(m_name, LogLevel.Info, message, perror));
+	end;
+	
+	member procedure Warn(message varchar2) as
+	begin
+		Log(LoggingEvent(m_name, LogLevel.Warn, message, null));
+	end;
+	
+	member procedure Warn(message varchar2, perror GenericException) as
+	begin
+		Log(LoggingEvent(m_name, LogLevel.Warn, message, perror));
 	end;
 	
 	member procedure Log(logEvent LoggingEvent) as

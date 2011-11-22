@@ -29,5 +29,10 @@ type body ConsoleAppender as
 		dbms_output.put_line(self.RenderLoggingEvent(loggingEvent));
 	end;
 	
+	overriding member function GetUnitName return varchar2 as
+	begin
+		return $$PLSQL_UNIT;
+	end;
+	
 end;
 /

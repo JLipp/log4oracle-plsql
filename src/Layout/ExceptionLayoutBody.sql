@@ -29,7 +29,10 @@ type body ExceptionLayout as
 			raise LogUtil.ArgumentNullException;
 		end if;
 		
-		return event.ExceptionString;
+		return event.ExceptionObject.Message||
+		       event.ExceptionObject.ErrorBacktrace||
+		       event.ExceptionObject.ErrorStack||
+		       event.ExceptionObject.CallStack;
 	end;
 	
 	constructor function ExceptionLayout return self as result is

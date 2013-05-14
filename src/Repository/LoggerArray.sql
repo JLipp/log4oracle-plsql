@@ -15,5 +15,6 @@
 */
 
 create or replace
-type LoggerArray is table of Logger;
+type LoggerArray 
+FORCE is table of Logger;
 /

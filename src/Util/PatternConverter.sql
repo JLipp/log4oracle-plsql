@@ -28,10 +28,11 @@ type PatternConverter as object
 	m_min number,
 	m_max number,
 	m_leftAlign number,
+	m_options varchar2(2000),
 	
-	static function Convert(event LoggingEvent, value varchar2) return varchar2,
+	static function Convert(event LoggingEvent, value varchar2, options varchar2) return varchar2,
 	
-	constructor function PatternConverter(key varchar2, value varchar2) return self as result,
+	constructor function PatternConverter(key varchar2, value varchar2 ) return self as result,
 	
 	member function Format(event LoggingEvent) return varchar2
 	

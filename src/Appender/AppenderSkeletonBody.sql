@@ -48,7 +48,7 @@ type body AppenderSkeleton as
 	
 	member procedure DoAppend(loggingEvent LoggingEvent) as
 	begin
-		if (loggingEvent.LLevel >= Treshold) then
+		if (loggingEvent.LLevel >= Threshold) then
 			Append(loggingEvent);
 		end if;
 	exception

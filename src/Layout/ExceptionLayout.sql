@@ -15,7 +15,8 @@
 */
 
 create or replace 
-type ExceptionLayout under LayoutSkeleton
+type ExceptionLayout 
+FORCE under LayoutSkeleton
 (
 	/**
 	* A Layout that renders only the Exception text from the logging event

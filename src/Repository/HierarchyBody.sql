@@ -17,7 +17,8 @@
 create or replace 
 package body Hierarchy as
 
-  m_ht LoggerArray;
+    TYPE LoggerHierarchy_t is Table of Logger not null index by varchar2(32000);
+    m_ht LoggerHierarchy_t;
 	
 	procedure Clear is
 	begin
@@ -41,7 +42,12 @@ package body Hierarchy as
 	
 	function GetLogger(name varchar2) return Logger is
 	begin
-		return LoggerImpl(1, null, name, anydata.ConvertObject(Hierarchy.Root), AppenderArray());
+        if not m_ht.exists(name) then
+            LogLog.debug('creayting logger:'||name);
+            m_ht(name) :=  LoggerImpl(1, null, name, anydata.ConvertObject(Hierarchy.Root), AppenderArray());
+        end if;
+
+		return m_ht(name);
 	end;
 	
 	function IsDisabled(level LogLevel) return boolean is
@@ -67,6 +73,7 @@ package body Hierarchy as
 begin
 		if Hierarchy.Root is null then
 			Hierarchy.Root := LoggerImpl(0, LogLevel.Debug, 'root', null, AppenderArray());
+            m_ht('root') := Hierarchy.Root ;
 		end if;
 end Hierarchy;
 /

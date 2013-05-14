@@ -55,7 +55,7 @@ package Hierarchy as
 	/**
 	* The threshold for all events in this repository
 	*/
-	Treshhold LogLevel;
+	Threshold LogLevel;
 	
 	/**
 	* Clear all logger definitions from the internal table

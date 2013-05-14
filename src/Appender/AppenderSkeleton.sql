@@ -15,7 +15,8 @@
 */
 
 create or replace 
-type AppenderSkeleton as object
+type AppenderSkeleton 
+FORCE as object
 (
 	/**
 	* This object provides the code for common functionality, such as support 
@@ -38,7 +39,7 @@ type AppenderSkeleton as object
 	* The threshold Level of this appender. There is no level threshold 
 	* filtering by default.
 	*/
-	Treshold LogLevel,
+	Threshold LogLevel,
 	
 	/**
 	* Initialize the appender based on the options set.

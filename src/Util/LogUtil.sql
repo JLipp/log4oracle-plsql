@@ -26,7 +26,8 @@ package LogUtil as
 	LayoutMissingException exception;
 	
 	DefaultConversionPattern  constant varchar2(255) := '%message%newline';
-	DetailConversionPattern   constant varchar2(255) := '%d [%w] %-5level %logger - %m%newline';
+	--DetailConversionPattern   constant varchar2(255) := '%d [%w] %-5level %logger - %m%newline';
+	DetailConversionPattern   constant varchar2(255) := q'[%d{ISO8601}> %-11c [%3L] %-5p %M{1} %m%n]';
 	CRLF                      constant varchar2(2) := chr(13)||chr(10);
 	
 end LogUtil;

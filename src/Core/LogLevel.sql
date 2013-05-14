@@ -14,7 +14,9 @@
 -- limitations under the License.
 --
 create or replace
-type LogLevel as object
+type LogLevel 
+FORCE
+as object
 (
 	/* The display name of this level. */
 	DisplayName varchar2(255),

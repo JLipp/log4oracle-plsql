@@ -18,7 +18,10 @@ create or replace
 package body BasicConfigurator as
 	
 	procedure Configure is
+        l_array AppenderArray := AppenderArray();
+
 		l_appender ConsoleAppender;
+		l_appender2 AQAppender;
 		l_layout PatternLayout;
 	begin
 		l_appender := ConsoleAppender('root');
@@ -26,7 +29,16 @@ package body BasicConfigurator as
 		l_layout.ConversionPattern := LogUtil.DetailConversionPattern;
 		l_layout.ActivateOptions;
 		l_appender.Layout := l_layout;
-		Configure(l_appender);
+
+        l_array.extend;
+        l_array(l_array.LAST) := l_appender;
+
+		l_appender2 := AQAppender('AQ', 'log_queue');
+
+        l_array.extend;
+        l_array(l_array.LAST) := l_appender2;
+
+		Configure(l_array);
 	end;
 
 	procedure Configure(appender AppenderSkeleton) is

@@ -63,30 +63,6 @@ set serveroutput on size 1000000 format wrapped
 set termout on
 
 prompt &line1
-prompt Droping existing log4oracle-plsql objects
-prompt &line1
-drop package BasicConfigurator;
-drop package LogManager;
-drop package Hierarchy;
-drop type ConsoleAppender;
-drop type LoggerImpl;
-drop type LoggerArray;
-drop type Logger;
-drop type AppenderArray;
-drop type AppenderSkeleton;
-drop type SimpleLayout;
-drop type PatternLayout;
-drop package PatternParser;
-drop type PatternConverterArray;
-drop type PatternConverter;
-drop type ExceptionLayout;
-drop type LayoutSkeleton;
-drop type LoggingEvent;
-drop type LogLevel;
-drop type GenericException;
-drop package LogUtil;
-
-prompt &line1
 prompt Creating log4oracle-plsql objects
 prompt &line1
 @@Util/LogUtil.sql
@@ -97,6 +73,8 @@ prompt &line1
 @@Util/LogLogBody.sql
 @@Core/LogLevel.sql
 @@Core/LogLevelBody.sql
+@@Core/LocationInfo.sql
+@@Core/LocationInfoBody.sql
 @@Core/LoggingEvent.sql
 @@Core/LoggingEventBody.sql
 @@Layout/LayoutSkeleton.sql
@@ -121,6 +99,8 @@ prompt &line1
 @@Repository/LoggerArray.sql
 @@Appender/ConsoleAppender.sql
 @@Appender/ConsoleAppenderBody.sql
+@@Appender/AQAppender.sql
+@@Appender/AQAppenderBody.sql
 @@Repository/Hierarchy.sql
 @@Repository/HierarchyBody.sql
 @@LogManager.sql

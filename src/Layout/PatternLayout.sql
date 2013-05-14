@@ -15,7 +15,8 @@
 */
 
 create or replace 
-type PatternLayout under LayoutSkeleton
+type PatternLayout 
+FORCE under LayoutSkeleton
 (
 	/**
 	* @head

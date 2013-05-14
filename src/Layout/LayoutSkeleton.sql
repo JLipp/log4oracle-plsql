@@ -15,7 +15,8 @@
 */
 
 create or replace 
-type LayoutSkeleton as object
+type LayoutSkeleton 
+FORCE as object
 (
 	/**
 	* Extend this abstract class to create your own log layout format.

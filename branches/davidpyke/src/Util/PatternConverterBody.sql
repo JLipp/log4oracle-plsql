@@ -17,26 +17,28 @@
 create or replace 
 type body PatternConverter as
 	
-	constructor function PatternConverter(key varchar2, value varchar2) return self as result is
+	constructor function PatternConverter(key varchar2, value varchar2 ) return self as result is
 	begin
 		self.Key := key;
 		self.Value := value;
 		self.m_min := 0;
 		self.m_max := 471234567;
 		self.m_leftAlign := 0;
+		self.m_options := NULL;
 		return;
 	end;
 	
-	static function Convert(event LoggingEvent, value varchar2) return varchar2 is
+	static function Convert(event LoggingEvent, value varchar2, options varchar2) return varchar2 is
 		l_ret varchar2(32767);
 	begin
 		execute immediate '
 			declare
 				event LoggingEvent := :a;
+                options varchar2(32000) := :b;
 			begin
-				:b := '||value||';
+				:c := '||value||';
 			end;'
-			using event, out l_ret;
+			using event, options,  out l_ret;
 		
 		return l_ret;
 	end;
@@ -45,7 +47,7 @@ type body PatternConverter as
 		msg varchar2(32767);
 		len number;
 	begin
-		msg := PatternConverter.Convert(event, self.Value);
+		msg := PatternConverter.Convert(event, self.Value, self.m_options);
 		if not (m_min < 0 and m_max >= 471234567) then
 			len := length(msg);
 			if len > m_max then

@@ -19,13 +19,16 @@ type body ConsoleAppender as
 
 	constructor function ConsoleAppender(name varchar2) return self as result as
 	begin
+
 		self.Name := name;
-		self.Treshold := LogLevel.Debug;
+		self.Threshold := LogLevel.Debug;
+        self.Layout := SimpleLayout();
+    
 		return;
 	end;
 	
 	overriding member procedure Append(loggingEvent LoggingEvent) as
-	begin
+    BEGIN
 		dbms_output.put_line(self.RenderLoggingEvent(loggingEvent));
 	end;
 	

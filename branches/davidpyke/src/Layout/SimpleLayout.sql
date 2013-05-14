@@ -15,7 +15,8 @@
 */
 
 create or replace 
-type SimpleLayout under LayoutSkeleton
+type SimpleLayout 
+FORCE under LayoutSkeleton
 (
 	/**
 	* A very simple layout

@@ -15,7 +15,9 @@
 */
 
 create or replace
-type GenericException as object
+type GenericException 
+FORCE
+as object
 (
 	/**
 	* Generic exception object to handle Oracle exception with more details. 
@@ -28,22 +30,22 @@ type GenericException as object
 	/**
 	* Error stack/message of the exception object.
 	*/
-	ErrorStack varchar2(32767),
+	ErrorStack clob, --varchar2(32767),
 	
 	/**
 	* Call Stack at the point where an exception was raised.
 	*/
-	ErrorBacktrace varchar2(32767),
+	ErrorBacktrace clob, --varchar2(32767),
 	
 	/**
 	* Detailed call stack where the exception was raised.
 	*/
-	CallStack varchar2(32767),
+	CallStack clob, --varchar2(32767),
 	
 	/**
 	* Additional message text for the exception.
 	*/
-	Message varchar2(32767),
+	Message clob, --varchar2(32767),
 	
 	/**
 	* Creates a new exception.

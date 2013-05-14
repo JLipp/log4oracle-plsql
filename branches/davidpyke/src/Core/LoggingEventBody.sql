@@ -17,7 +17,7 @@
 create or replace 
 type body LoggingEvent as
 	
-	constructor function LoggingEvent(loggerName varchar2, logLevel LogLevel, message varchar2, error GenericException) return self as result as
+	constructor function LoggingEvent(loggerName varchar2, logLevel LogLevel, message varchar2, error GenericException, loc LocationInfo) return self as result as
 	begin
 		self.LoggerName := loggerName;
 		self.LLevel := logLevel;
@@ -25,6 +25,7 @@ type body LoggingEvent as
 		self.UserName := user;
 		self.Message := message;
 		self.ExceptionObject := error;
+		self.Location := loc;
 		
 		return;
 	end;

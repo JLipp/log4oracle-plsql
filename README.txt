@@ -1,8 +1,1 @@
-Project Status
-==============
-
-
-Documentation
-=============
-
-
+The log4oracle-plsql framework is a set of objects to help the PL/SQL programmer output log statements to a variety of output targets. log4oracle-plsql is based on Apache log4j/log4net framework. It keeps the usage especially the configuration as similar as possible to log4x to give developers the benefit of an already known syntax. The whole implementation of this framework is done in PL/SQL and does not need any external process.
